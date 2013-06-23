@@ -1,6 +1,12 @@
 package com.github.trainingsapp.data;
 
+import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import com.github.trainingsapp.business.Exercise;
+import com.github.trainingsapp.dto.DTOExercise;
+
+import java.util.List;
 
 /**
  * Diese Klasse greift auf die Datenbank zu. Mit einem Objekt dieser Klasse können
@@ -11,14 +17,46 @@ import android.database.sqlite.SQLiteDatabase;
 public class DatabaseAccessor {
 
   private SQLiteDatabase database;
+  private DatabaseSchema dbSchema;
 
   /****************/
   /* Constructors */
+
+  public DatabaseAccessor(Context context) {
+    dbSchema = new DatabaseSchema(context);
+  }
+
   /*     End      */
   /****************/
 
   /***********/
   /* Methods */
+
+  public void open() throws SQLException {
+    database = dbSchema.getWritableDatabase();
+  }
+
+  public void close() {
+    dbSchema.close();
+  }
+
+  public void createExercises() {
+    /* TODO füllen */
+  }
+
+  public void createExercise() {
+    /* TODO füllen */
+  }
+
+  public void deleteExercise(Exercise exercise) {
+    /* TODO füllen */
+  }
+
+  public List<DTOExercise> getAllExercises() {
+    /* TODO füllen */
+    return null;
+  }
+
   /*   End   */
   /***********/
 
