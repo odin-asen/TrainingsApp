@@ -12,10 +12,8 @@ public class DTOExercise {
   public String text;
   public String anatomyPath;
   public String animationDir;
-  /** 0 - Anfaenger <br/>
-   * 1 - Fortgeschrittener */
-  public int difficulty;
-  public DTOEquipment[] equipment;
-  public DTOMuscle[] primaryMuscles;
-  public DTOMuscle[] secondaryMuscles;
+  public String difficulty;
+  public String[] equipment;
+  public String[] primaryMuscles;
+  public String[] secondaryMuscles;
 }

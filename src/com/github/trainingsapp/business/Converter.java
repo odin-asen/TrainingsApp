@@ -2,6 +2,9 @@ package com.github.trainingsapp.business;
 
 import com.github.trainingsapp.dto.DTOExercise;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Mit dieser Klasse koennen DTO-Klassen in ihre business layer Pendants konvertiert werden
  * und umgekehrt.
@@ -19,10 +22,20 @@ public class Converter {
   /* Methods */
 
   public Exercise fromDTO(DTOExercise dto) {
-//    Drawable image;
-//    AnimationDrawable animation;
-//    final Exercise exercise = new Exercise(dto.name, dto.text, image, animation);
-    return null;
+    return new Exercise(dto.id, dto.name, dto.text, dto.anatomyPath, dto.animationDir,
+        Difficulty.valueOf(dto.difficulty), fromDTO(Equipment.class, dto.equipment),
+        fromDTO(Muscle.class, dto.primaryMuscles), fromDTO(Muscle.class, dto.secondaryMuscles));
+  }
+
+  /** Wandelt ein Array mit Enumeration Objekten in eine Array List um. */
+  public <T extends Enum>List<T> fromDTO(Class<T> clazz, String[] dtoArray) {
+    final List<T> modelList = new ArrayList<T>(dtoArray.length);
+
+    for (String value : dtoArray) {
+      modelList.add(T.valueOf(clazz, value));
+    }
+
+    return modelList;
   }
 
   /*   End   */
