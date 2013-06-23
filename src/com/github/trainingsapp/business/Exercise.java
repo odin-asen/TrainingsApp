@@ -12,6 +12,7 @@ import java.util.List;
  * Date: 23.06.13
  */
 public class Exercise {
+  private long id;
 
   private String mName;
   private String mText;
