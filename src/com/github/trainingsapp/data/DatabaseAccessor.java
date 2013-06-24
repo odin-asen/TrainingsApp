@@ -3,7 +3,6 @@ package com.github.trainingsapp.data;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.dto.DTOExercise;
 
 import java.util.List;
@@ -44,11 +43,11 @@ public class DatabaseAccessor {
     /* TODO füllen */
   }
 
-  public void createExercise() {
+  public void createExercise(DTOExercise exercise) {
     /* TODO füllen */
   }
 
-  public void deleteExercise(Exercise exercise) {
+  public void deleteExercise(DTOExercise exercise) {
     /* TODO füllen */
   }
 

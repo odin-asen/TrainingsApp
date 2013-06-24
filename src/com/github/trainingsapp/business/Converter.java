@@ -38,6 +38,32 @@ public class Converter {
     return modelList;
   }
 
+  public DTOExercise toDTO(Exercise exercise) {
+    final DTOExercise dto = new DTOExercise();
+
+    dto.anatomyPath = exercise.getAnatomyPath();
+    dto.animationDir = exercise.getExecAnimationFile();
+    dto.difficulty = exercise.getDifficulty().name();
+    dto.equipment = toDTO(exercise.getEquipmentList());
+    dto.id = exercise.getId();
+    dto.name = exercise.getName();
+    dto.primaryMuscles = toDTO(exercise.getPrimaryMuscles());
+    dto.secondaryMuscles = toDTO(exercise.getSecondaryMuscles());
+    dto.text = exercise.getText();
+
+    return dto;
+  }
+
+  public <T extends Enum>String[] toDTO(List<T> modelList) {
+    final String[] dtoArray = new String[modelList.size()];
+
+    for (int i = 0; i < modelList.size(); i++) {
+      dtoArray[i] = modelList.get(i).name();
+    }
+
+    return dtoArray;
+  }
+
   /*   End   */
   /***********/
 
