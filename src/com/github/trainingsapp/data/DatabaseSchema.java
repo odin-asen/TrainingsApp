@@ -2,8 +2,13 @@ package com.github.trainingsapp.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Diese Klasse verwaltet das Datenbankschema. Das Schema wird verändert, wenn Tabellen gelöscht,
@@ -23,64 +28,27 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   public static final String TABLE_SECONDARY_MUSCLE = "secondaryMuscle";
 
   /* Allgemeine Spaltennamen */
-  public static final String COLUMN_ID = "ID";
   public static final String COLUMN_NAME = "name";
-  public static final String COLUMN_ANIMATION_PATH = "animation";
-  public static final String COLUMN_ANATOMY_PATH = "anatomy";
   public static final String COLUMN_DIFFICULTY = "difficulty";
-  public static final String COLUMN_TEXT = "text";
 
   /* 1-zu-n, n-zu-m Spalten */
-  public static final String COLUMN_ID_EXERCISE = "idExrcs";
-  public static final String COLUMN_ID_EQUIPMENT = "idEqpmnt";
-  public static final String COLUMN_ID_MUSCLE = "idMscl";
+  public static final String COLUMN_ID_EXERCISE = "exercise_id";
+  public static final String COLUMN_ID_EQUIPMENT = "equipment_id";
+  public static final String COLUMN_ID_MUSCLE = "muscle_id";
 
-  private static final String DATABASE_NAME = "exercises.db";
+  /* The Android's default system path of your application database. */
+  private static String DATABASE_PATH = "/data/data/trainingsapp/databases/";
+  private static final String DATABASE_NAME = "test.db";
   private static final int DATABASE_VERSION = 1;
 
-  /* SQL Befehl fuer die Datenbankerstellung */
-  private static final String CREATE_EXERCISE = "create table "
-      + TABLE_EXERCISE + "("
-      + COLUMN_ID + " integer primary key autoincrement, "
-      + COLUMN_NAME + " text not null, "
-      + COLUMN_TEXT + " text not null, "
-      + COLUMN_ANIMATION_PATH + " text not null, "
-      + COLUMN_ANATOMY_PATH + " text not null, "
-      + COLUMN_DIFFICULTY + " text not null "
-      +");";
-  private static final String CREATE_EQUIPMENT = "create table "
-      + TABLE_EQUIPMENT + "("
-      + COLUMN_ID + " integer primary key autoincrement, "
-      + COLUMN_NAME + " text not null, "
-      +");";
-  private static final String CREATE_MUSCLE = "create table "
-      + TABLE_MUSCLE + "("
-      + COLUMN_ID + " integer primary key autoincrement, "
-      + COLUMN_NAME + " text not null, "
-      +");";
-
-  /* n-zu-m Tabellen */
-  private static final String CREATE_EX_EQ = "create table "
-      + TABLE_EX_EQ + "("
-      + "foreign key(" + COLUMN_ID_EXERCISE + ") references " + TABLE_EXERCISE + "(" + COLUMN_ID + "),"
-      + "foreign key(" + COLUMN_ID_EQUIPMENT + ") references " + TABLE_EQUIPMENT + "(" + COLUMN_ID + ")"
-      +");";
-  private static final String CREATE_PRIMARY_MUSCLE = "create table "
-      + TABLE_PRIMARY_MUSCLE + "("
-      + "foreign key(" + COLUMN_ID_EXERCISE + ") references " + TABLE_EXERCISE + "(" + COLUMN_ID + "),"
-      + "foreign key(" + COLUMN_ID_MUSCLE + ") references " + TABLE_MUSCLE + "(" + COLUMN_ID + ")"
-      +");";
-  private static final String CREATE_SECONDARY_MUSCLE = "create table "
-      + TABLE_SECONDARY_MUSCLE + "("
-      + "foreign key(" + COLUMN_ID_EXERCISE + ") references " + TABLE_EXERCISE + "(" + COLUMN_ID + "),"
-      + "foreign key(" + COLUMN_ID_MUSCLE + ") references " + TABLE_MUSCLE + "(" + COLUMN_ID + ")"
-      +");";
+  private Context mContext;
 
   /****************/
   /* Constructors */
 
   public DatabaseSchema(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    mContext = context;
   }
 
   /*     End      */
@@ -90,27 +58,52 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   /* Methods */
 
   @Override
+  /**
+   * Erstellt eine leere Datenbank im System und ueberschreibt diese mit der
+   * vorbereiteten.
+   */
   public void onCreate(SQLiteDatabase database) {
-    database.execSQL(CREATE_EXERCISE);
-    database.execSQL(CREATE_EQUIPMENT);
-    database.execSQL(CREATE_MUSCLE);
-    database.execSQL(CREATE_EX_EQ);
-    database.execSQL(CREATE_PRIMARY_MUSCLE);
-    database.execSQL(CREATE_SECONDARY_MUSCLE);
+    if(!checkDataBase()){
+      //By calling this method and empty database will be created into the default system path
+      //of your application so we are gonna be able to overwrite that database with our database.
+      this.getReadableDatabase();
+      try {
+        copyDataBase();
+      } catch (IOException e) {
+        throw new Error("Error copying database");
+      }
+    }
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-    Log.w(DatabaseSchema.class.getName(),
-        "Upgrading database from version " + oldVersion + " to "
-            + newVersion + ", which will destroy all old data");
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE);
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_EQUIPMENT);
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_MUSCLE);
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_EX_EQ);
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_PRIMARY_MUSCLE);
-    database.execSQL("DROP TABLE IF EXISTS " + TABLE_SECONDARY_MUSCLE);
-    onCreate(database);
+
+  }
+
+  /**
+   * Copies your database from your local assets-folder to the just created empty database in the
+   * system folder, from where it can be accessed and handled.
+   * This is done by transfering bytestream.
+   * */
+  private void copyDataBase() throws IOException{
+    InputStream in = mContext.getAssets().open(DATABASE_NAME);
+    OutputStream out = new FileOutputStream(getDatabasePath());
+    /* transfer bytes from the inputfile to the outputfile */
+    byte[] buffer = new byte[1024];
+    int length;
+    while ((length = in.read(buffer))>0){
+      out.write(buffer, 0, length);
+    }
+
+    /* Close the streams */
+    out.flush();
+    out.close();
+    in.close();
+
+  }
+
+  public String getDatabasePath() {
+    return DATABASE_PATH + DATABASE_NAME;
   }
 
   /*   End   */
@@ -118,6 +111,25 @@ public class DatabaseSchema extends SQLiteOpenHelper {
 
   /*******************/
   /* Private Methods */
+
+  /**
+   * Check if the database already exist to avoid re-copying the file each time you open the application.
+   * @return true if it exists, false if it doesn't
+   */
+  private boolean checkDataBase(){
+    SQLiteDatabase checkDB = null;
+    try{
+      checkDB = SQLiteDatabase.openDatabase(getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
+    } catch(SQLiteException e) {
+      /* Datenbank existiert noch nicht */
+    }
+
+    if(checkDB != null){
+      checkDB.close();
+      return true;
+    } else return false;
+  }
+
   /*       End       */
   /*******************/
 

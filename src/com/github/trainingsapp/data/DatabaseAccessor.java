@@ -33,9 +33,11 @@ public class DatabaseAccessor {
 
   public void open() throws SQLException {
     database = dbSchema.getWritableDatabase();
+//    myDataBase = SQLiteDatabase.openDatabase(getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
   }
 
   public void close() {
+    database.close();
     dbSchema.close();
   }
 
