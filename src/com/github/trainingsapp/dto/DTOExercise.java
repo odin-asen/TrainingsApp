@@ -7,7 +7,6 @@ package com.github.trainingsapp.dto;
  * Date: 23.06.13
  */
 public class DTOExercise {
-  public long id;
   public String name;
   public String text;
   public String anatomyPath;

@@ -19,6 +19,12 @@ import java.io.OutputStream;
  */
 public class DatabaseSchema extends SQLiteOpenHelper {
 
+
+  /** Index fuer die Spalte name in der Tabelle exercise */
+  public static final int EXERCISE_INDEX_NAME = 0;
+  /** Index fuer die Spalte difficulty in der Tabelle exercise */
+  public static final int EXERCISE_INDEX_DIFF = 1;
+
   /* Tabellenbezeichnungen */
   public static final String TABLE_EXERCISE = "exercise";
   public static final String TABLE_EQUIPMENT = "equipment";
