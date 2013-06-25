@@ -22,7 +22,7 @@ public class Converter {
   /* Methods */
 
   public Exercise fromDTO(DTOExercise dto) {
-    return new Exercise(dto.id, dto.name, dto.text, dto.anatomyPath, dto.animationDir,
+    return new Exercise(dto.name, dto.text, dto.anatomyPath, dto.animationFile,
         Difficulty.valueOf(dto.difficulty), fromDTO(Equipment.class, dto.equipment),
         fromDTO(Muscle.class, dto.primaryMuscles), fromDTO(Muscle.class, dto.secondaryMuscles));
   }
@@ -42,10 +42,9 @@ public class Converter {
     final DTOExercise dto = new DTOExercise();
 
     dto.anatomyPath = exercise.getAnatomyPath();
-    dto.animationDir = exercise.getExecAnimationFile();
+    dto.animationFile = exercise.getExecAnimationFile();
     dto.difficulty = exercise.getDifficulty().name();
     dto.equipment = toDTO(exercise.getEquipmentList());
-    dto.id = exercise.getId();
     dto.name = exercise.getName();
     dto.primaryMuscles = toDTO(exercise.getPrimaryMuscles());
     dto.secondaryMuscles = toDTO(exercise.getSecondaryMuscles());

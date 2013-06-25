@@ -10,8 +10,6 @@ import java.util.List;
  * Date: 23.06.13
  */
 public class Exercise {
-  private long mId;
-
   private String mName;
   /** Uebungsbeschreibung */
   private String mText;
@@ -30,10 +28,9 @@ public class Exercise {
   /****************/
   /* Constructors */
 
-  public Exercise(long id, String name, String text, String anatomyPath, String execAnimationFile,
+  public Exercise(String name, String text, String anatomyPath, String execAnimationFile,
                   Difficulty difficulty, List<Equipment> equipments, List<Muscle> primaryMuscles,
                   List<Muscle> secondaryMuscles) {
-    mId = id;
     mName = name;
     mText = text;
     mAnatomyPath = anatomyPath;
@@ -64,10 +61,6 @@ public class Exercise {
   /* Private Methods */
   /*       End       */
   /*******************/
-
-  public long getId() {
-    return mId;
-  }
 
   /*********************/
   /* Getter and Setter */

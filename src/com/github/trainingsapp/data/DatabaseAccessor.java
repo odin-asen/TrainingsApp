@@ -79,6 +79,9 @@ public class DatabaseAccessor {
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {
       final DTOExercise exercise = cursorToExercise(cursor);
+      exercise.anatomyPath = exercise.name+".jpeg";
+      exercise.animationFile = exercise.name+".xml";
+      exercise.text = exercise.name;
       exercises.add(exercise);
       cursor.moveToNext();
     }
