@@ -6,6 +6,18 @@ package com.github.trainingsapp.business;
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public enum Difficulty {
-  AMATEUR, EXPERIENCED;
+public class Difficulty {
+  private String mName;
+
+  Difficulty(String name) {
+    mName = name;
+  }
+
+  public String getName() {
+    return mName;
+  }
+
+  public String toString() {
+    return mName;
+  }
 }

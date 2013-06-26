@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   public static final String COLUMN_ID_MUSCLE = "muscle_id";
 
   /* The Android's default system path of your application database. */
-  private static String DATABASE_PATH = "/data/data/trainingsapp/databases/";
+  private static String DATABASE_PATH = "/data/data/com.github/databases/";
   private static final String DATABASE_NAME = "test.db";
   private static final int DATABASE_VERSION = 1;
 
@@ -55,6 +56,7 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   public DatabaseSchema(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     mContext = context;
+    Log.wtf("Database",context.getPackageName());
   }
 
   /*     End      */
@@ -64,15 +66,27 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   /* Methods */
 
   @Override
+  public void onCreate(SQLiteDatabase database) {
+  }
+
+  @Override
+  public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+  }
+
+  public String getDatabasePath() {
+    return DATABASE_PATH + DATABASE_NAME;
+  }
+
   /**
    * Erstellt eine leere Datenbank im System und ueberschreibt diese mit der
    * vorbereiteten.
    */
-  public void onCreate(SQLiteDatabase database) {
+  public void createDatabase() {
     if(!checkDataBase()){
       //By calling this method and empty database will be created into the default system path
       //of your application so we are gonna be able to overwrite that database with our database.
       this.getReadableDatabase();
+      this.close();
       try {
         copyDataBase();
       } catch (IOException e) {
@@ -81,10 +95,11 @@ public class DatabaseSchema extends SQLiteOpenHelper {
     }
   }
 
-  @Override
-  public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+  /*   End   */
+  /***********/
 
-  }
+  /*******************/
+  /* Private Methods */
 
   /**
    * Copies your database from your local assets-folder to the just created empty database in the
@@ -105,35 +120,24 @@ public class DatabaseSchema extends SQLiteOpenHelper {
     out.flush();
     out.close();
     in.close();
-
   }
-
-  public String getDatabasePath() {
-    return DATABASE_PATH + DATABASE_NAME;
-  }
-
-  /*   End   */
-  /***********/
-
-  /*******************/
-  /* Private Methods */
 
   /**
    * Check if the database already exist to avoid re-copying the file each time you open the application.
    * @return true if it exists, false if it doesn't
    */
   private boolean checkDataBase(){
-    SQLiteDatabase checkDB = null;
+    boolean exists = false;
     try{
-      checkDB = SQLiteDatabase.openDatabase(getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
+      SQLiteDatabase checkDB = SQLiteDatabase.openDatabase(getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
+      exists = checkDB != null;
+      if(exists)
+        checkDB.close();
     } catch(SQLiteException e) {
       /* Datenbank existiert noch nicht */
     }
 
-    if(checkDB != null){
-      checkDB.close();
-      return true;
-    } else return false;
+    return exists;
   }
 
   /*       End       */

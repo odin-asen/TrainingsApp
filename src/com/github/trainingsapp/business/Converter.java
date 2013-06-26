@@ -23,18 +23,23 @@ public class Converter {
 
   public Exercise fromDTO(DTOExercise dto) {
     return new Exercise(dto.name, dto.text, dto.anatomyPath, dto.animationFile,
-        Difficulty.valueOf(dto.difficulty), fromDTO(Equipment.class, dto.equipment),
-        fromDTO(Muscle.class, dto.primaryMuscles), fromDTO(Muscle.class, dto.secondaryMuscles));
+        new Difficulty(dto.difficulty), fromEquipmentDTO(dto.equipment),
+        fromMuscleDTO(dto.primaryMuscles), fromMuscleDTO(dto.secondaryMuscles));
   }
 
-  /** Wandelt ein Array mit Enumeration Objekten in eine Array List um. */
-  public <T extends Enum>List<T> fromDTO(Class<T> clazz, String[] dtoArray) {
-    final List<T> modelList = new ArrayList<T>(dtoArray.length);
-
+  public List<Muscle> fromMuscleDTO(String[] dtoArray) {
+    final List<Muscle> modelList = new ArrayList<Muscle>(dtoArray.length);
     for (String value : dtoArray) {
-      modelList.add(T.valueOf(clazz, value));
+      modelList.add(new Muscle(value));
     }
+    return modelList;
+  }
 
+  public List<Equipment> fromEquipmentDTO(String[] dtoArray) {
+    final List<Equipment> modelList = new ArrayList<Equipment>(dtoArray.length);
+    for (String value : dtoArray) {
+      modelList.add(new Equipment(value));
+    }
     return modelList;
   }
 
@@ -43,7 +48,7 @@ public class Converter {
 
     dto.anatomyPath = exercise.getAnatomyPath();
     dto.animationFile = exercise.getExecAnimationFile();
-    dto.difficulty = exercise.getDifficulty().name();
+    dto.difficulty = exercise.getDifficulty().getName();
     dto.equipment = toDTO(exercise.getEquipmentList());
     dto.name = exercise.getName();
     dto.primaryMuscles = toDTO(exercise.getPrimaryMuscles());
@@ -53,11 +58,11 @@ public class Converter {
     return dto;
   }
 
-  public <T extends Enum>String[] toDTO(List<T> modelList) {
+  public <T>String[] toDTO(List<T> modelList) {
     final String[] dtoArray = new String[modelList.size()];
 
     for (int i = 0; i < modelList.size(); i++) {
-      dtoArray[i] = modelList.get(i).name();
+      dtoArray[i] = modelList.get(i).toString();
     }
 
     return dtoArray;

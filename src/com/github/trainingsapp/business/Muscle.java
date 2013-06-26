@@ -1,17 +1,12 @@
 package com.github.trainingsapp.business;
 
 /**
- * Diese Klasse ist eine Liste von Muskelpartien, die waehrend einer Uebung angesprochen werden.
+ * Diese Klasse repraesentiert eine Muskelpartie.
  * <p/>
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public enum Muscle {
-  BICEPS("Bizeps"),
-  CHEST("Brust"),
-  QUADRICEPS("Quadrizeps"),
-  TRICEPS("Trizeps");
-
+public class Muscle {
   private String mName;
 
   Muscle(String name) {
@@ -19,6 +14,10 @@ public enum Muscle {
   }
 
   public String getName() {
+    return mName;
+  }
+
+  public String toString() {
     return mName;
   }
 }

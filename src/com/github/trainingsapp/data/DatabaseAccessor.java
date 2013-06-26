@@ -36,8 +36,9 @@ public class DatabaseAccessor {
   /* Methods */
 
   public void open() throws SQLException {
-    database = dbSchema.getWritableDatabase();
-//    myDataBase = SQLiteDatabase.openDatabase(getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
+    dbSchema.createDatabase();
+//    database = dbSchema.getWritableDatabase();
+    database = SQLiteDatabase.openDatabase(dbSchema.getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
   }
 
   public void close() {
@@ -123,7 +124,7 @@ public class DatabaseAccessor {
        *               where exercise_id=NAME
        */
       final Cursor cursor = database.query(queryTables[i], new String[]{DatabaseSchema.COLUMN_NAME},
-          DatabaseSchema.COLUMN_ID_EXERCISE+"="+exercise.name,null,null,null,null);
+          DatabaseSchema.COLUMN_ID_EXERCISE+"=\'"+exercise.name+"\'",null,null,null,null);
       eqPrimSec[i] = cursorToStringArray(cursor);
     }
     /* Uebertragen der Arrays */
