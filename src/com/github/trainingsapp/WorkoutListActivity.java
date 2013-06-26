@@ -38,7 +38,7 @@ public class WorkoutListActivity extends ListActivity {
     dbAccessor = new DatabaseAccessor(this);
     dbAccessor.open();
 
-    Converter converter = new Converter();
+    Converter converter = new Converter(this);
     final List<DTOExercise> dtos = dbAccessor.getAllExercises();
     dbAccessor.fillListObjects(dtos);
     final List<Exercise> values = new ArrayList<Exercise>(dtos.size());

@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TrainingsApp</string>
+
+    <!--Uebungsnamen-->
+    <string name="kniebeuge">Kniebeuge</string>
+    <string name="dips_brust">Dips (Brust)</string>
+    <string name="dips_trizeps">Dips (Trizeps)</string>
+    <string name="hantel">Hantel</string>
+    <string name="klimmzug">Klimmzug</string>
+    <string name="power">Eurotraining</string>
+
+    <!--Schwierigkeitsstufen-->
+    <string name="amateur">Amateur</string>
+    <string name="fortgeschritten">Fortgeschritten</string>
+
+    <!--Geraete-->
+    <string name="nichts">nichts</string>
+    <string name="stange">Stange</string>
+    <string name="kurzhantel">Kurzhantel</string>
+    <string name="reck">Reck</string>
+
+    <!--Muskeln-->
+    <string name="bizeps">Bizeps</string>
+    <string name="trizeps">Trizeps</string>
+    <string name="quadrizeps">Quadrizeps</string>
+    <string name="brust">Brust</string>
+    <string name="unterarm">Unterarm</string>
+    <string name="ruecken">Ruecken</string>
 </resources>

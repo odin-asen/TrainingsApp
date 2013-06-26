@@ -19,14 +19,12 @@ public class DatabaseAccessor {
 
   private SQLiteDatabase database;
   private DatabaseSchema dbSchema;
-  private Context mContext;
 
   /****************/
   /* Constructors */
 
   public DatabaseAccessor(Context context) {
     dbSchema = new DatabaseSchema(context);
-    mContext = context;
   }
 
   /*     End      */
@@ -38,7 +36,7 @@ public class DatabaseAccessor {
   public void open() throws SQLException {
     dbSchema.createDatabase();
 //    database = dbSchema.getWritableDatabase();
-    database = SQLiteDatabase.openDatabase(dbSchema.getDatabasePath(), null, SQLiteDatabase.OPEN_READONLY);
+    database = SQLiteDatabase.openDatabase(dbSchema.getDatabasePath(), null, SQLiteDatabase.OPEN_READWRITE);
   }
 
   public void close() {
@@ -80,9 +78,6 @@ public class DatabaseAccessor {
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {
       final DTOExercise exercise = cursorToExercise(cursor);
-      exercise.anatomyPath = exercise.name+".jpeg";
-      exercise.animationFile = exercise.name+".xml";
-      exercise.text = exercise.name;
       exercises.add(exercise);
       cursor.moveToNext();
     }

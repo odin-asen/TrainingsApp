@@ -8,9 +8,6 @@ package com.github.trainingsapp.dto;
  */
 public class DTOExercise {
   public String name;
-  public String text;
-  public String anatomyPath;
-  public String animationFile;
   public String difficulty;
   public String[] equipment;
   public String[] primaryMuscles;

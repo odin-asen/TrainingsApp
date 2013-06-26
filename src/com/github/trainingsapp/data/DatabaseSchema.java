@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,21 +26,21 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   public static final int EXERCISE_INDEX_DIFF = 1;
 
   /* Tabellenbezeichnungen */
-  public static final String TABLE_EXERCISE = "exercise";
-  public static final String TABLE_EQUIPMENT = "equipment";
-  public static final String TABLE_MUSCLE = "muscle";
-  public static final String TABLE_EX_EQ = "exerciseEquipment";
-  public static final String TABLE_PRIMARY_MUSCLE = "primaryMuscle";
-  public static final String TABLE_SECONDARY_MUSCLE = "secondaryMuscle";
+  public static final String TABLE_EXERCISE = "Uebung";
+  public static final String TABLE_EQUIPMENT = "Geraet";
+  public static final String TABLE_MUSCLE = "Muskel";
+  public static final String TABLE_EX_EQ = "Uebungsgeraet";
+  public static final String TABLE_PRIMARY_MUSCLE = "Primaermuskel";
+  public static final String TABLE_SECONDARY_MUSCLE = "Sekundaermuskel";
 
   /* Allgemeine Spaltennamen */
   public static final String COLUMN_NAME = "name";
-  public static final String COLUMN_DIFFICULTY = "difficulty";
+  public static final String COLUMN_DIFFICULTY = "stufe";
 
   /* 1-zu-n, n-zu-m Spalten */
-  public static final String COLUMN_ID_EXERCISE = "exercise_id";
-  public static final String COLUMN_ID_EQUIPMENT = "equipment_id";
-  public static final String COLUMN_ID_MUSCLE = "muscle_id";
+  public static final String COLUMN_ID_EXERCISE = "uebung_id";
+  public static final String COLUMN_ID_EQUIPMENT = "geraet_id";
+  public static final String COLUMN_ID_MUSCLE = "muskel_id";
 
   /* The Android's default system path of your application database. */
   private static String DATABASE_PATH = "/data/data/com.github/databases/";
@@ -56,7 +55,6 @@ public class DatabaseSchema extends SQLiteOpenHelper {
   public DatabaseSchema(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     mContext = context;
-    Log.wtf("Database",context.getPackageName());
   }
 
   /*     End      */

@@ -13,10 +13,10 @@ public class Exercise {
   private String mName;
   /** Uebungsbeschreibung */
   private String mText;
-  /** Dateipfad der Anatomiebilddatei */
-  private String mAnatomyPath;
-  /** XML Datei, die die Animation beschreibt */
-  private String mExecAnimationFile;
+  /** Ressourcen ID der Anatomiebilddatei */
+  private int mAnatomyRID;
+  /** Ressourcen ID der Animations XML Datei */
+  private int mAnimationRID;
 
   private Difficulty mDifficulty;
   private List<Equipment> mEquipmentList;
@@ -28,13 +28,13 @@ public class Exercise {
   /****************/
   /* Constructors */
 
-  public Exercise(String name, String text, String anatomyPath, String execAnimationFile,
+  public Exercise(String name, String text, int anatomyRID, int animationRID,
                   Difficulty difficulty, List<Equipment> equipments, List<Muscle> primaryMuscles,
                   List<Muscle> secondaryMuscles) {
     mName = name;
     mText = text;
-    mAnatomyPath = anatomyPath;
-    mExecAnimationFile = execAnimationFile;
+    mAnatomyRID = anatomyRID;
+    mAnimationRID = animationRID;
     mDifficulty = difficulty;
     mEquipmentList = new ArrayList<Equipment>(equipments);
     mPrimaryMuscles = new ArrayList<Muscle>(primaryMuscles);
@@ -74,12 +74,12 @@ public class Exercise {
     return mText;
   }
 
-  public String getAnatomyPath() {
-    return mAnatomyPath;
+  public int getAnatomyRID() {
+    return mAnatomyRID;
   }
 
-  public String getExecAnimationFile() {
-    return mExecAnimationFile;
+  public int getAnimationRID() {
+    return mAnimationRID;
   }
 
   public Difficulty getDifficulty() {
@@ -96,6 +96,10 @@ public class Exercise {
 
   public List<Muscle> getSecondaryMuscles() {
     return mSecondaryMuscles;
+  }
+
+  public String toString() {
+    return mName;
   }
 
   /*        End        */
