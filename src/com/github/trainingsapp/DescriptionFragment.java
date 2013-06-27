@@ -5,16 +5,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 import com.github.R;
 
 /**
- * Dieses Fragment zeigt ein Bild an, das als zusätzliche Detailinformation dient.
+ * Dieses Fragment zeigt die Details einer Trainingsuebung an.
  * <p/>
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class DetailImageFragment extends Fragment {
+public class DescriptionFragment extends Fragment {
   /****************/
   /* Constructors */
   /*     End      */
@@ -28,9 +28,9 @@ public class DetailImageFragment extends Fragment {
                            ViewGroup container, Bundle savedInstanceState) {
     // The last two arguments ensure LayoutParams are inflated
     // properly.
-    View rootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_description, container, false);
     Bundle args = getArguments();
-    ImageView imageView = ((ImageView) rootView.findViewById(R.id.anatomy_view));
+    TextView textView = ((TextView) rootView.findViewById(R.id.description_view));
     //TODO animation setzen
     return rootView;
   }
