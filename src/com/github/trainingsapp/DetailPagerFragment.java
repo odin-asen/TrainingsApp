@@ -41,6 +41,9 @@ public class DetailPagerFragment extends Fragment {
   public void refresh() {
     if(mDetailPagerAdapter != null)
       mDetailPagerAdapter.setExercise(mExercise);
+    /* Setzt die Detailansicht, wenn der Adapter und das View
+     * nicht null sind.
+     */
     if(mViewPager != null && mDetailPagerAdapter != null) {
       if(!mDetailPagerAdapter.equals(mViewPager.getAdapter())) {
         mViewPager.setAdapter(mDetailPagerAdapter);

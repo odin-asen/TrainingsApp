@@ -1,5 +1,6 @@
 package com.github.trainingsapp;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class AnimationFragment extends Fragment {
+  private AnimationDrawable mAnimation;
   /****************/
   /* Constructors */
   /*     End      */
@@ -30,9 +32,24 @@ public class AnimationFragment extends Fragment {
     // properly.
     View rootView = inflater.inflate(R.layout.fragment_animation, container, false);
     Bundle args = getArguments();
-    ImageView imageView = ((ImageView) rootView.findViewById(R.id.animation_view));
-    //TODO animation setzen
+    ImageView imageView = (ImageView) rootView.findViewById(R.id.animation_view);
+    imageView.setBackgroundResource(args.getInt(DetailPagerAdapter.KEY_ANIMATION));
+    mAnimation = (AnimationDrawable) imageView.getBackground();
     return rootView;
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    mAnimation.start();
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+
+    mAnimation.stop();
   }
 
   /*   End   */

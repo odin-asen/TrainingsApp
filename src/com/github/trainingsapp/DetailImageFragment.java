@@ -31,7 +31,7 @@ public class DetailImageFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
     Bundle args = getArguments();
     ImageView imageView = ((ImageView) rootView.findViewById(R.id.anatomy_view));
-    //TODO animation setzen
+    imageView.setBackgroundResource(args.getInt(DetailPagerAdapter.KEY_ANATOMY));
     return rootView;
   }
 
