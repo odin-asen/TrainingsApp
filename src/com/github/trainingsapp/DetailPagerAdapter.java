@@ -9,9 +9,9 @@ import com.github.trainingsapp.business.Exercise;
 // Since this is an object collection, use a FragmentStatePagerAdapter,
 // and NOT a FragmentPagerAdapter.
 public class DetailPagerAdapter extends FragmentStatePagerAdapter {
-  private static final String KEY_DESCRIPTION = "description";
-  private static final String KEY_ANATOMY = "anatomy";
-  private static final String KEY_ANIMATION = "animation";
+  public static final String KEY_DESCRIPTION = "description";
+  public static final String KEY_ANATOMY = "anatomy";
+  public static final String KEY_ANIMATION = "animation";
   private Exercise mExercise;
 
   public DetailPagerAdapter(FragmentManager fm) {
@@ -48,7 +48,9 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter {
 
   @Override
   public int getCount() {
-    return 3;
+    if(mExercise == null) {
+      return 0;
+    } else return 3;
   }
 
   @Override

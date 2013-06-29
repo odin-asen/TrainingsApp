@@ -18,8 +18,6 @@ import java.util.List;
  * Date: 27.06.13
  */
 public class ExerciseListFragment extends Fragment {
-  private ArrayAdapter<Exercise> mExercises;
-
   /****************/
   /* Constructors */
   /*     End      */
@@ -31,14 +29,15 @@ public class ExerciseListFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    return inflater.inflate(R.layout.exercise_list, container);
+    return inflater.inflate(R.layout.exercise_list, container, false);
   }
 
   public void setExercises(List<Exercise> exercises) {
-    mExercises = new ArrayAdapter<Exercise>(getActivity(),
-        android.R.layout.simple_list_item_1, exercises);
-    final ListView listView = (ListView) getActivity().findViewById(R.id.list_view);
-    listView.setAdapter(mExercises);
+    if(getActivity() != null) {
+      ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(getActivity(),
+          android.R.layout.simple_list_item_1, exercises);
+      ((ListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
+    }
   }
 
   /*   End   */

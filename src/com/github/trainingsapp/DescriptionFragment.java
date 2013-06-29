@@ -31,7 +31,7 @@ public class DescriptionFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_description, container, false);
     Bundle args = getArguments();
     TextView textView = ((TextView) rootView.findViewById(R.id.description_view));
-    //TODO animation setzen
+    textView.setText(args.getString(DetailPagerAdapter.KEY_DESCRIPTION));
     return rootView;
   }
 
