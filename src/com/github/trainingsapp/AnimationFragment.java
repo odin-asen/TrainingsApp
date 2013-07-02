@@ -16,7 +16,11 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class AnimationFragment extends Fragment {
+  View mRootView;
+  ImageView mImageView;
   private AnimationDrawable mAnimation;
+  Bundle mArgs;
+
   /****************/
   /* Constructors */
   /*     End      */
@@ -28,30 +32,38 @@ public class AnimationFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container, Bundle savedInstanceState) {
-    // The last two arguments ensure LayoutParams are inflated
-    // properly.
-    View rootView = inflater.inflate(R.layout.fragment_animation, container, false);
-    Bundle args = getArguments();
-    ImageView imageView = (ImageView) rootView.findViewById(R.id.animation_view);
-    imageView.setBackgroundResource(args.getInt(DetailPagerAdapter.KEY_ANIMATION));
-    mAnimation = (AnimationDrawable) imageView.getBackground();
-    return rootView;
+    super.onCreateView(inflater, container, savedInstanceState);
+    if(mRootView == null)
+      mRootView = inflater.inflate(R.layout.fragment_animation, container, false);
+    return mRootView;
   }
 
   @Override
   public void onStart() {
     super.onStart();
 
-    mAnimation.start();
+    if(mImageView == null)
+      mImageView = (ImageView) mRootView.findViewById(R.id.animation_view);
+
+    mImageView.setBackgroundResource(mArgs.getInt(DetailPagerAdapter.KEY_ANIMATION));
+
+    mAnimation = (AnimationDrawable) mImageView.getBackground();
+
+    if(mAnimation != null)
+      mAnimation.start();
   }
 
   @Override
   public void onPause() {
     super.onPause();
 
-    mAnimation.stop();
+    if(mAnimation != null)
+      mAnimation.stop();
   }
 
+  public void setArgs(Bundle args) {
+    mArgs = args;
+  }
   /*   End   */
   /***********/
 

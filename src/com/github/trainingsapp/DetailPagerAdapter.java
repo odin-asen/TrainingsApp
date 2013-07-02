@@ -9,14 +9,21 @@ import com.github.trainingsapp.business.Exercise;
 // Since this is an object collection, use a FragmentStatePagerAdapter,
 // and NOT a FragmentPagerAdapter.
 public class DetailPagerAdapter extends FragmentStatePagerAdapter {
+
   public static final String KEY_DESCRIPTION = "description";
   public static final String KEY_ANATOMY = "anatomy";
   public static final String KEY_ANIMATION = "animation";
   private Exercise mExercise;
+  DetailImageFragment mAnatomyFragment;
+  AnimationFragment mAnimationFragment;
+  DescriptionFragment mDescriptionFragment;
 
   public DetailPagerAdapter(FragmentManager fm) {
     super(fm);
     mExercise = null;
+    mAnatomyFragment = new DetailImageFragment();
+    mAnimationFragment = new AnimationFragment();
+    mDescriptionFragment = new DescriptionFragment();
   }
 
   public void setExercise(Exercise exercise) {
@@ -32,17 +39,19 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter {
     Fragment fragment;
     final Bundle args = new Bundle();
     if(i == 0) {
-      fragment = new DetailImageFragment();
+      fragment = mAnatomyFragment;
       args.putInt(KEY_ANATOMY, mExercise.getAnatomyRID());
+      mAnatomyFragment.setArgs(args);
     } else if(i == 1) {
-      fragment = new DescriptionFragment();
+      fragment = mDescriptionFragment;
       args.putString(KEY_DESCRIPTION, mExercise.getText());
+      mDescriptionFragment.setArgs(args);
     } else {
-      fragment = new AnimationFragment();
+      fragment = mAnimationFragment;
       args.putInt(KEY_ANIMATION, mExercise.getAnimationRID());
+      mAnimationFragment.setArgs(args);
     }
 
-    fragment.setArguments(args);
     return fragment;
   }
 

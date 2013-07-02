@@ -18,6 +18,7 @@ public class Converter {
   private static final String TYPE_STRING = "string";
   private static final String TYPE_DRAWABLE = "drawable";
   private static final String PKG_NAME = "com.github";
+  private static final String PREFIX_DESCR = "description_";
 
   private Resources mRes;
 
@@ -36,7 +37,7 @@ public class Converter {
 
   public Exercise fromDTO(DTOExercise dto) {
     int nameRID = mRes.getIdentifier(dto.name, TYPE_STRING, PKG_NAME);
-    int textRID = mRes.getIdentifier(dto.name, TYPE_STRING, PKG_NAME);
+    int textRID = mRes.getIdentifier(PREFIX_DESCR +dto.name, TYPE_STRING, PKG_NAME);
     int anatomyRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
     int animationRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
     int difficultyRID = mRes.getIdentifier(dto.difficulty, TYPE_STRING, PKG_NAME);

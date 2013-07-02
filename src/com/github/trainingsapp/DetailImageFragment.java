@@ -15,6 +15,10 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DetailImageFragment extends Fragment {
+  View mRootView;
+  ImageView mImageView;
+  Bundle mArgs;
+
   /****************/
   /* Constructors */
   /*     End      */
@@ -26,15 +30,21 @@ public class DetailImageFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container, Bundle savedInstanceState) {
-    // The last two arguments ensure LayoutParams are inflated
-    // properly.
-    View rootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
-    Bundle args = getArguments();
-    ImageView imageView = ((ImageView) rootView.findViewById(R.id.anatomy_view));
-    imageView.setBackgroundResource(args.getInt(DetailPagerAdapter.KEY_ANATOMY));
-    return rootView;
+    if(mRootView == null)
+      mRootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
+    return mRootView;
   }
 
+  public void onResume() {
+    super.onResume();
+    if(mImageView == null)
+      mImageView = ((ImageView) mRootView.findViewById(R.id.anatomy_view));
+    mImageView.setBackgroundResource(mArgs.getInt(DetailPagerAdapter.KEY_ANATOMY));
+  }
+
+  public void setArgs(Bundle args) {
+    mArgs = args;
+  }
   /*   End   */
   /***********/
 

@@ -15,6 +15,9 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DescriptionFragment extends Fragment {
+  private TextView mTextView;
+  Bundle mArgs;
+
   /****************/
   /* Constructors */
   /*     End      */
@@ -29,12 +32,19 @@ public class DescriptionFragment extends Fragment {
     // The last two arguments ensure LayoutParams are inflated
     // properly.
     View rootView = inflater.inflate(R.layout.fragment_description, container, false);
-    Bundle args = getArguments();
-    TextView textView = ((TextView) rootView.findViewById(R.id.description_view));
-    textView.setText(args.getString(DetailPagerAdapter.KEY_DESCRIPTION));
+    mTextView = ((TextView) rootView.findViewById(R.id.description_view));
     return rootView;
   }
 
+  public void onStart() {
+    super.onStart();
+    mTextView.setText(mArgs.getString(
+        DetailPagerAdapter.KEY_DESCRIPTION));
+  }
+
+  public void setArgs(Bundle args) {
+    mArgs = args;
+  }
   /*   End   */
   /***********/
 
