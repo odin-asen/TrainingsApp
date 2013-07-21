@@ -15,8 +15,21 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DescriptionFragment extends Fragment {
+  public static final String KEY_DESCRIPTION = "description";
+
+  private TextView mTextView;
+
   /****************/
   /* Constructors */
+
+  public static DescriptionFragment newInstance(String text) {
+    DescriptionFragment f = new DescriptionFragment();
+    Bundle bdl = new Bundle(1);
+    bdl.putString(KEY_DESCRIPTION, text);
+    f.setArguments(bdl);
+    return f;
+  }
+
   /*     End      */
   /****************/
 
@@ -29,10 +42,13 @@ public class DescriptionFragment extends Fragment {
     // The last two arguments ensure LayoutParams are inflated
     // properly.
     View rootView = inflater.inflate(R.layout.fragment_description, container, false);
-    Bundle args = getArguments();
-    TextView textView = ((TextView) rootView.findViewById(R.id.description_view));
-
+    mTextView = ((TextView) rootView.findViewById(R.id.description_view));
     return rootView;
+  }
+
+  public void onStart() {
+    super.onStart();
+    mTextView.setText(getArguments().getString(KEY_DESCRIPTION));
   }
 
   /*   End   */

@@ -15,8 +15,22 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DetailImageFragment extends Fragment {
+  private static final String KEY_ANATOMY = "anatomy";
+
+  private View mRootView;
+  private ImageView mImageView;
+
   /****************/
   /* Constructors */
+
+  public static DetailImageFragment newInstance(int anatomyID) {
+    DetailImageFragment f = new DetailImageFragment();
+    Bundle bdl = new Bundle(1);
+    bdl.putInt(KEY_ANATOMY, anatomyID);
+    f.setArguments(bdl);
+    return f;
+  }
+
   /*     End      */
   /****************/
 
@@ -26,13 +40,17 @@ public class DetailImageFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container, Bundle savedInstanceState) {
-    // The last two arguments ensure LayoutParams are inflated
-    // properly.
-    View rootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
-    Bundle args = getArguments();
-    ImageView imageView = ((ImageView) rootView.findViewById(R.id.anatomy_view));
+    super.onCreateView(inflater, container, savedInstanceState);
+    if(mRootView == null)
+      mRootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
+    return mRootView;
+  }
 
-    return rootView;
+  public void onResume() {
+    super.onResume();
+    if(mImageView == null)
+      mImageView = ((ImageView) mRootView.findViewById(R.id.anatomy_view));
+    mImageView.setBackgroundResource(getArguments().getInt(KEY_ANATOMY));
   }
 
   /*   End   */
