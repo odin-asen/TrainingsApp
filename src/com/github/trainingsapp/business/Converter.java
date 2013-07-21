@@ -2,8 +2,6 @@ package com.github.trainingsapp.business;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
-import com.github.R;
 import com.github.trainingsapp.dto.DTOExercise;
 
 import java.util.ArrayList;
@@ -42,16 +40,8 @@ public class Converter {
     int anatomyRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
     int animationRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
     int difficultyRID = mRes.getIdentifier(dto.difficulty, TYPE_STRING, PKG_NAME);
-    String string = mRes.getResourceTypeName(R.string.kniebeuge);
-    string = mRes.getResourcePackageName(R.string.kniebeuge);
-    string = mRes.getResourceEntryName(R.string.kniebeuge);
-    string = mRes.getResourceName(R.string.kniebeuge);
-
-    final String name = mRes.getString(nameRID);
-    final String text = mRes.getString(textRID);
-    final String schwierigkeit = mRes.getString(difficultyRID);
-    return new Exercise(name, text,
-        anatomyRID, animationRID, new Difficulty(schwierigkeit),
+    return new Exercise(mRes.getString(nameRID), mRes.getString(textRID),
+        anatomyRID, animationRID, new Difficulty(mRes.getString(difficultyRID)),
         fromEquipmentDTO(dto.equipment), fromMuscleDTO(dto.primaryMuscles),
         fromMuscleDTO(dto.secondaryMuscles));
   }
@@ -69,7 +59,6 @@ public class Converter {
     final List<Equipment> modelList = new ArrayList<Equipment>(dtoArray.length);
     for (String value : dtoArray) {
       int equipmentRID = mRes.getIdentifier(value, TYPE_STRING, PKG_NAME);
-      Log.wtf("wert",value);
       modelList.add(new Equipment(mRes.getString(equipmentRID)));
     }
     return modelList;

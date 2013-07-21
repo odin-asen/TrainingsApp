@@ -1,8 +1,11 @@
 package com.github.trainingsapp;
 
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
@@ -19,7 +22,7 @@ import java.util.List;
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class WorkoutListActivity extends ListActivity {
+public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
   private DatabaseAccessor dbAccessor;
 
   /****************/
@@ -33,7 +36,7 @@ public class WorkoutListActivity extends ListActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+    setContentView(R.layout.activity_main);
 
     dbAccessor = new DatabaseAccessor(this);
     dbAccessor.open();
@@ -47,11 +50,9 @@ public class WorkoutListActivity extends ListActivity {
       values.add(converter.fromDTO(dto));
     }
 
-    // Use the SimpleCursorAdapter to show the
-    // elements in a ListView
-    ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(this,
-        android.R.layout.simple_list_item_1, values);
-    setListAdapter(adapter);
+    ((ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.list))
+        .setExercises(values);
+    ((ListView) findViewById(R.id.list_view)).setOnItemClickListener(this);
   }
 
   @Override
@@ -64,6 +65,11 @@ public class WorkoutListActivity extends ListActivity {
   protected void onPause() {
     dbAccessor.close();
     super.onPause();
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    Adapter a = parent.getAdapter();
   }
 
   /*   End   */

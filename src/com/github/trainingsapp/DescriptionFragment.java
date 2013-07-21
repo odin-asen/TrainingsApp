@@ -1,20 +1,20 @@
 package com.github.trainingsapp;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 import com.github.R;
 
 /**
- * Diese Fragment startet eine Animation aus verschiedenen Bildern.
+ * Dieses Fragment zeigt die Details einer Trainingsuebung an.
  * <p/>
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class AnimationFragment extends Fragment {
+public class DescriptionFragment extends Fragment {
   /****************/
   /* Constructors */
   /*     End      */
@@ -28,9 +28,9 @@ public class AnimationFragment extends Fragment {
                            ViewGroup container, Bundle savedInstanceState) {
     // The last two arguments ensure LayoutParams are inflated
     // properly.
-    View rootView = inflater.inflate(R.layout.fragment_animation, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_description, container, false);
     Bundle args = getArguments();
-    ImageView imageView = ((ImageView) rootView.findViewById(R.id.animation_view));
+    TextView textView = ((TextView) rootView.findViewById(R.id.description_view));
 
     return rootView;
   }
