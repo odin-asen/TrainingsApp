@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
+import com.github.trainingsapp.views.DetailPagerFragment;
+import com.github.trainingsapp.views.ExerciseListFragment;
 
 /**
  * Diese Klasse startet das Programm. Eine Liste der möglichen Trainingsuebungen
@@ -18,7 +20,6 @@ import com.github.trainingsapp.business.Exercise;
  */
 public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
   private DetailPagerFragment mDetailFragment;
-  private ExerciseListFragment mListFragment;
 
   /****************/
   /* Constructors */
@@ -33,9 +34,9 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    mListFragment = new ExerciseListFragment();
+    ExerciseListFragment listFragment = new ExerciseListFragment();
     getSupportFragmentManager().beginTransaction().add(
-        R.id.main_container, mListFragment).commit();
+        R.id.main_container, listFragment).commit();
     mDetailFragment = new DetailPagerFragment();
   }
 
@@ -43,10 +44,14 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     mDetailFragment = new DetailPagerFragment();
     final FragmentManager manager = getSupportFragmentManager();
+
+    /* Liste mit Detail Ansicht ersetzen */
+    /* addToBackStack erlaubt die Benutzung der Return-Taste */
     FragmentTransaction transaction = manager.beginTransaction();
     transaction.replace(R.id.main_container, mDetailFragment);
     transaction.addToBackStack(null);
     transaction.commit();
+
     mDetailFragment.setExercise((Exercise) parent.getAdapter().getItem(position));
   }
 

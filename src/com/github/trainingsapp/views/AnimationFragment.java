@@ -1,4 +1,4 @@
-package com.github.trainingsapp;
+package com.github.trainingsapp.views;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
@@ -25,12 +25,16 @@ public class AnimationFragment extends Fragment {
   /****************/
   /* Constructors */
 
+  /**
+   * Erstellt ein AnimationFragment Objekt. Der uebergebene Integerwert
+   * wird in die ImageView bei onStart gelesen.
+   */
   public static AnimationFragment newInstance(int animationID) {
-    AnimationFragment f = new AnimationFragment();
+    AnimationFragment fragment = new AnimationFragment();
     Bundle bdl = new Bundle(1);
     bdl.putInt(KEY_ANIMATION, animationID);
-    f.setArguments(bdl);
-    return f;
+    fragment.setArguments(bdl);
+    return fragment;
   }
 
   /*     End      */

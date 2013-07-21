@@ -1,4 +1,4 @@
-package com.github.trainingsapp;
+package com.github.trainingsapp.views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +22,10 @@ public class DescriptionFragment extends Fragment {
   /****************/
   /* Constructors */
 
+  /**
+   * Erstellt ein DescriptionFragment Objekt. Der uebergebene Stringwert
+   * wird als Beschreibungstext verwendet.
+   */
   public static DescriptionFragment newInstance(String text) {
     DescriptionFragment f = new DescriptionFragment();
     Bundle bdl = new Bundle(1);

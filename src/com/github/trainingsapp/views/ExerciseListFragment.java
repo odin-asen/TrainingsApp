@@ -1,4 +1,4 @@
-package com.github.trainingsapp;
+package com.github.trainingsapp.views;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -36,9 +36,7 @@ public class ExerciseListFragment extends Fragment {
   /* Methods */
 
   @Override
-  /**
-   * Activity muss AdapterView.OnItemClickListener implementieren.
-   */
+  /** Activity muss AdapterView.OnItemClickListener implementieren. */
   public void onAttach(Activity activity) {
     super.onAttach(activity);
 
@@ -56,6 +54,7 @@ public class ExerciseListFragment extends Fragment {
     return inflater.inflate(R.layout.exercise_list, container, false);
   }
 
+  /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
       ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(getActivity(),
@@ -75,6 +74,7 @@ public class ExerciseListFragment extends Fragment {
   public void onResume() {
     final Activity activity = getActivity();
 
+    /* Datenbank oeffnen und Exerciseliste holen. */
     dbAccessor.open();
     Converter converter = new Converter(activity);
     final List<DTOExercise> dtos = dbAccessor.getAllExercises();
@@ -83,6 +83,8 @@ public class ExerciseListFragment extends Fragment {
     for (DTOExercise dto : dtos) {
       values.add(converter.fromDTO(dto));
     }
+
+    /* Exerciseliste und OnItemClickListener setzen */
     setExercises(values);
     ((ListView) activity.findViewById(R.id.list_view))
         .setOnItemClickListener(mItemListener);
@@ -94,12 +96,6 @@ public class ExerciseListFragment extends Fragment {
   public void onPause() {
     dbAccessor.close();
     super.onPause();
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
   }
 
   /*   End   */

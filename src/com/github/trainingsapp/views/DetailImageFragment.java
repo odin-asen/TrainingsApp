@@ -1,4 +1,4 @@
-package com.github.trainingsapp;
+package com.github.trainingsapp.views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +23,10 @@ public class DetailImageFragment extends Fragment {
   /****************/
   /* Constructors */
 
+  /**
+   * Erstellt ein DetailImageFragment Objekt. Der uebergebene Integerwert
+   * wird in die ImageView bei onStart gelesen.
+   */
   public static DetailImageFragment newInstance(int anatomyID) {
     DetailImageFragment f = new DetailImageFragment();
     Bundle bdl = new Bundle(1);
@@ -46,8 +50,9 @@ public class DetailImageFragment extends Fragment {
     return mRootView;
   }
 
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
+
     if(mImageView == null)
       mImageView = ((ImageView) mRootView.findViewById(R.id.anatomy_view));
     mImageView.setBackgroundResource(getArguments().getInt(KEY_ANATOMY));
