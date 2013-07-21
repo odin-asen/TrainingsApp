@@ -15,12 +15,22 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DetailImageFragment extends Fragment {
-  View mRootView;
-  ImageView mImageView;
-  Bundle mArgs;
+  private static final String KEY_ANATOMY = "anatomy";
+
+  private View mRootView;
+  private ImageView mImageView;
 
   /****************/
   /* Constructors */
+
+  public static DetailImageFragment newInstance(int anatomyID) {
+    DetailImageFragment f = new DetailImageFragment();
+    Bundle bdl = new Bundle(1);
+    bdl.putInt(KEY_ANATOMY, anatomyID);
+    f.setArguments(bdl);
+    return f;
+  }
+
   /*     End      */
   /****************/
 
@@ -30,6 +40,7 @@ public class DetailImageFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
     if(mRootView == null)
       mRootView = inflater.inflate(R.layout.fragment_detail_image, container, false);
     return mRootView;
@@ -39,12 +50,9 @@ public class DetailImageFragment extends Fragment {
     super.onResume();
     if(mImageView == null)
       mImageView = ((ImageView) mRootView.findViewById(R.id.anatomy_view));
-    mImageView.setBackgroundResource(mArgs.getInt(DetailPagerAdapter.KEY_ANATOMY));
+    mImageView.setBackgroundResource(getArguments().getInt(KEY_ANATOMY));
   }
 
-  public void setArgs(Bundle args) {
-    mArgs = args;
-  }
   /*   End   */
   /***********/
 

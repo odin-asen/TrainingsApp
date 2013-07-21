@@ -16,13 +16,23 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class AnimationFragment extends Fragment {
-  View mRootView;
-  ImageView mImageView;
+  private static final String KEY_ANIMATION = "animation";
+
+  private View mRootView;
+  private ImageView mImageView;
   private AnimationDrawable mAnimation;
-  Bundle mArgs;
 
   /****************/
   /* Constructors */
+
+  public static AnimationFragment newInstance(int animationID) {
+    AnimationFragment f = new AnimationFragment();
+    Bundle bdl = new Bundle(1);
+    bdl.putInt(KEY_ANIMATION, animationID);
+    f.setArguments(bdl);
+    return f;
+  }
+
   /*     End      */
   /****************/
 
@@ -45,7 +55,7 @@ public class AnimationFragment extends Fragment {
     if(mImageView == null)
       mImageView = (ImageView) mRootView.findViewById(R.id.animation_view);
 
-    mImageView.setBackgroundResource(mArgs.getInt(DetailPagerAdapter.KEY_ANIMATION));
+    mImageView.setBackgroundResource(getArguments().getInt(KEY_ANIMATION));
 
     mAnimation = (AnimationDrawable) mImageView.getBackground();
 
@@ -61,9 +71,6 @@ public class AnimationFragment extends Fragment {
       mAnimation.stop();
   }
 
-  public void setArgs(Bundle args) {
-    mArgs = args;
-  }
   /*   End   */
   /***********/
 

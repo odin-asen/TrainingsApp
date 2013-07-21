@@ -41,6 +41,7 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
 
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    mDetailFragment = new DetailPagerFragment();
     final FragmentManager manager = getSupportFragmentManager();
     FragmentTransaction transaction = manager.beginTransaction();
     transaction.replace(R.id.main_container, mDetailFragment);

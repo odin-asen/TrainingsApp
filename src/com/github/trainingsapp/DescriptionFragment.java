@@ -15,11 +15,21 @@ import com.github.R;
  * Date: 23.06.13
  */
 public class DescriptionFragment extends Fragment {
+  public static final String KEY_DESCRIPTION = "description";
+
   private TextView mTextView;
-  Bundle mArgs;
 
   /****************/
   /* Constructors */
+
+  public static DescriptionFragment newInstance(String text) {
+    DescriptionFragment f = new DescriptionFragment();
+    Bundle bdl = new Bundle(1);
+    bdl.putString(KEY_DESCRIPTION, text);
+    f.setArguments(bdl);
+    return f;
+  }
+
   /*     End      */
   /****************/
 
@@ -38,13 +48,9 @@ public class DescriptionFragment extends Fragment {
 
   public void onStart() {
     super.onStart();
-    mTextView.setText(mArgs.getString(
-        DetailPagerAdapter.KEY_DESCRIPTION));
+    mTextView.setText(getArguments().getString(KEY_DESCRIPTION));
   }
 
-  public void setArgs(Bundle args) {
-    mArgs = args;
-  }
   /*   End   */
   /***********/
 

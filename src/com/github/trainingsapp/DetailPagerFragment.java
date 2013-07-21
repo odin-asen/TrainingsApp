@@ -11,33 +11,60 @@ import android.view.ViewGroup;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailPagerFragment extends Fragment implements ViewPager.OnPageChangeListener {
-  private DetailPagerAdapter mDetailPagerAdapter;
+
+  private View mRootView;
   private ViewPager mViewPager;
+  private DetailPagerAdapter mDetailPagerAdapter;
   private Exercise mExercise;
+
+  public DetailPagerFragment() {
+    mExercise = null;
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    List<Fragment> fragments = getFragments();
+    mDetailPagerAdapter = new DetailPagerAdapter(getChildFragmentManager(),
+        fragments);
+  }
+
+  private List<Fragment> getFragments(){
+    if(mExercise == null)
+      return new ArrayList<Fragment>(0);
+
+    List<Fragment> fList = new ArrayList<Fragment>(3);
+
+    fList.add(DetailImageFragment.newInstance(mExercise.getAnatomyRID()));
+    fList.add(DescriptionFragment.newInstance(mExercise.getText()));
+    fList.add(AnimationFragment.newInstance(mExercise.getAnimationRID()));
+
+    return fList;
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    final View rootView = inflater.inflate(R.layout.detail, container, false);
-    mViewPager = (ViewPager) rootView.findViewById(R.id.detail_pager);
-    mDetailPagerAdapter = new DetailPagerAdapter(getActivity().getSupportFragmentManager());
+    mRootView = inflater.inflate(R.layout.detail, container, false);
 
-    return rootView;
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-    mViewPager = (ViewPager) getActivity().findViewById(R.id.detail_pager);
+    mViewPager = (ViewPager) mRootView.findViewById(R.id.detail_pager);
     mViewPager.setOnPageChangeListener(this);
     mViewPager.setOffscreenPageLimit(3);
-    refresh();
+    mViewPager.setAdapter(mDetailPagerAdapter);
+
+    return mRootView;
   }
 
   public void setExercise(Exercise exercise) {
     mExercise = exercise;
+//    mDetailPagerAdapter.setExercise(exercise);
+//    setAdapter(mDetailPagerAdapter);
+//    refresh();
   }
 
   public void refresh() {
@@ -60,9 +87,12 @@ public class DetailPagerFragment extends Fragment implements ViewPager.OnPageCha
 
   @Override
   public void onPageSelected(int position) {
-//    View view = mDetailPagerAdapter.getItem(position).getView();
-//    if(view != null)
-//      view.invalidate();
+//    Fragment fragment = mDetailPagerAdapter.getItem(position);
+//    if(fragment != null) {
+//      fragment.getActivity().findViewById(R.id.anatomy_view).invalidate();
+//      fragment.getActivity().findViewById(R.id.animation_view).invalidate();
+//      fragment.getActivity().findViewById(R.id.description_view).invalidate();
+//    }
     Log.wtf("onPageSelected", ""+position);
   }
 
