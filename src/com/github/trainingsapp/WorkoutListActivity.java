@@ -52,7 +52,10 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     transaction.addToBackStack(null);
     transaction.commit();
 
-    mDetailFragment.setExercise((Exercise) parent.getAdapter().getItem(position));
+    /* Detailtext wird gesetzt */
+    final Exercise item = (Exercise) parent.getAdapter().getItem(position);
+
+    mDetailFragment.setExercise(item);
   }
 
   /*   End   */
