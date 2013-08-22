@@ -58,7 +58,7 @@ public class DatabaseAccessor {
         DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_SECONDARY_MUSCLE};
 
     for (DTOExercise exercise : exercises) {
-      fillExerciseWithDatabaseContent(queryTables, exercise);
+      getEquipmentAndMuscles(exercise);
     }
     return exercises;
   }
@@ -118,6 +118,9 @@ public class DatabaseAccessor {
       /* select name from queryTables[index]
        *               where exercise_id=NAME
        */
+      /* Die Abfrage oben ist falsch, richtig wäre es select name from queryTables[index]
+      *  where uebung_id=NAME and table_id=name
+      *  Hierbei ist table_id ein platzhalter fuer den anderen Spaltennamen der Join-Tabelle */
       final Cursor cursor = database.query(queryTables[i], new String[]{DatabaseSchema.COLUMN_NAME},
           DatabaseSchema.COLUMN_ID_EXERCISE+"=\'"+exercise.name+"\'",null,null,null,null);
       eqPrimSec[i] = cursorToStringArray(cursor);
@@ -126,6 +129,58 @@ public class DatabaseAccessor {
     exercise.equipment = eqPrimSec[0];
     exercise.primaryMuscles = eqPrimSec[1];
     exercise.secondaryMuscles = eqPrimSec[2];
+  }
+
+  /** Fuellt die Variablen fuer die Geraete und die Muskelpartien eines DTOExercise-Objekts. */
+  private void getEquipmentAndMuscles(DTOExercise exercise) {
+    /* table_ids ist auf queryTables abgestimmt,*/
+    /* um in einer Schleife verwendet zu werden */
+    final String[] table_ids = new String[] {
+        DatabaseSchema.COLUMN_ID_EQUIPMENT, DatabaseSchema.COLUMN_ID_MUSCLE,
+        DatabaseSchema.COLUMN_ID_MUSCLE};
+    final String[] queryTables = new String[] {
+        DatabaseSchema.TABLE_EQUIPMENT + "," + DatabaseSchema.TABLE_EX_EQ,
+        DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_PRIMARY_MUSCLE,
+        DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_SECONDARY_MUSCLE};
+
+    Cursor cursor = database.query(queryTables[0], new String[]{DatabaseSchema.COLUMN_NAME},
+        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[0],
+            DatabaseSchema.COLUMN_NAME), null, null,null,null);
+
+    /* Uebertragen des Arrays */
+    exercise.equipment = cursorToStringArray(cursor);
+
+    cursor.close();
+
+    cursor = database.query(queryTables[1], new String[]{DatabaseSchema.COLUMN_NAME},
+        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[1],
+            DatabaseSchema.COLUMN_NAME), null, null,null,null);
+
+    /* Uebertragen des Arrays */
+    exercise.primaryMuscles = cursorToStringArray(cursor);
+
+    cursor.close();
+
+    cursor = database.query(queryTables[2], new String[]{DatabaseSchema.COLUMN_NAME},
+        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[2],
+            DatabaseSchema.COLUMN_NAME), null, null,null,null);
+
+    /* Uebertragen des Arrays */
+    exercise.secondaryMuscles = cursorToStringArray(cursor);
+
+    cursor.close();
+  }
+
+  /**
+   * Notwendig, da nicht ganz klar ist, wie die ?-Ersetzung
+   * bei SQLiteDatabase.query funktioniert.
+   * Gibt einen bestimmten Wert aus, der als Fremdschluessel in einer
+   * Join-Tabelle hinterlegt ist. table_id ist der Name der Fremdschluesselspalte in
+   * der Join-Tabelle und name_id der Name der korrespondierenden Spalte in einer Tabelle.
+   */
+  private String standardWhereClause(String columnName, String rowValue, String table_id, String name_id) {
+    return columnName+"=\'"+rowValue+"\' and "+ table_id
+        +"="+name_id;
   }
 
   /*       End       */
