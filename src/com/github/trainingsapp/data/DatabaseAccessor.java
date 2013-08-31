@@ -35,7 +35,6 @@ public class DatabaseAccessor {
 
   public void open() throws SQLException {
     dbSchema.createDatabase();
-//    database = dbSchema.getWritableDatabase();
     database = SQLiteDatabase.openDatabase(dbSchema.getDatabasePath(), null, SQLiteDatabase.OPEN_READWRITE);
   }
 
@@ -51,12 +50,6 @@ public class DatabaseAccessor {
    * @return Eine gefuellte Liste mit Exercise-Objekten.
    */
   public List<DTOExercise> fillListObjects(List<DTOExercise> exercises) {
-    /* Abgefragte Tabellen (z.B.: from equipment, exerciseEquipment) */
-    final String[] queryTables = new String[]{
-        DatabaseSchema.TABLE_EQUIPMENT + "," + DatabaseSchema.TABLE_EX_EQ,
-        DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_PRIMARY_MUSCLE,
-        DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_SECONDARY_MUSCLE};
-
     for (DTOExercise exercise : exercises) {
       getEquipmentAndMuscles(exercise);
     }
@@ -111,64 +104,43 @@ public class DatabaseAccessor {
     return strings;
   }
 
-  /** Fuellt die Variablen eines DTOExercise Objekts mit dem Datenbankinhalt */
-  private void fillExerciseWithDatabaseContent(String[] queryTables, DTOExercise exercise) {
+  /** Fuellt die Variablen fuer die Geraete und die Muskelpartien eines DTOExercise-Objekts. */
+  private void getEquipmentAndMuscles(DTOExercise exercise) {
+    /* column_ids ist auf queryTables abgestimmt,*/
+    /* um in einer Schleife verwendet zu werden */
+    final String[] column_ids = getColumnIDs();
+    final String[] queryTables = getQueryTables();
     final String[][] eqPrimSec = new String[queryTables.length][];
+
+    /* select name from queryTables[index]
+     *        where exercise_id='name' and column_id=name
+     */
     for (int i = 0; i < queryTables.length; i++) {
-      /* select name from queryTables[index]
-       *               where exercise_id=NAME
-       */
-      /* Die Abfrage oben ist falsch, richtig wäre es select name from queryTables[index]
-      *  where uebung_id=NAME and table_id=name
-      *  Hierbei ist table_id ein platzhalter fuer den anderen Spaltennamen der Join-Tabelle */
       final Cursor cursor = database.query(queryTables[i], new String[]{DatabaseSchema.COLUMN_NAME},
-          DatabaseSchema.COLUMN_ID_EXERCISE+"=\'"+exercise.name+"\'",null,null,null,null);
+          standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, column_ids[i],
+              DatabaseSchema.COLUMN_NAME),null,null,null,null);
+      /* String-Array zwischenspeichern */
       eqPrimSec[i] = cursorToStringArray(cursor);
+      cursor.close();
     }
+
     /* Uebertragen der Arrays */
     exercise.equipment = eqPrimSec[0];
     exercise.primaryMuscles = eqPrimSec[1];
     exercise.secondaryMuscles = eqPrimSec[2];
   }
 
-  /** Fuellt die Variablen fuer die Geraete und die Muskelpartien eines DTOExercise-Objekts. */
-  private void getEquipmentAndMuscles(DTOExercise exercise) {
-    /* table_ids ist auf queryTables abgestimmt,*/
-    /* um in einer Schleife verwendet zu werden */
-    final String[] table_ids = new String[] {
+  private String[] getColumnIDs() {
+    return new String[] {
         DatabaseSchema.COLUMN_ID_EQUIPMENT, DatabaseSchema.COLUMN_ID_MUSCLE,
         DatabaseSchema.COLUMN_ID_MUSCLE};
-    final String[] queryTables = new String[] {
+  }
+
+  private String[] getQueryTables() {
+    return new String[] {
         DatabaseSchema.TABLE_EQUIPMENT + "," + DatabaseSchema.TABLE_EX_EQ,
         DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_PRIMARY_MUSCLE,
         DatabaseSchema.TABLE_MUSCLE + "," + DatabaseSchema.TABLE_SECONDARY_MUSCLE};
-
-    Cursor cursor = database.query(queryTables[0], new String[]{DatabaseSchema.COLUMN_NAME},
-        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[0],
-            DatabaseSchema.COLUMN_NAME), null, null,null,null);
-
-    /* Uebertragen des Arrays */
-    exercise.equipment = cursorToStringArray(cursor);
-
-    cursor.close();
-
-    cursor = database.query(queryTables[1], new String[]{DatabaseSchema.COLUMN_NAME},
-        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[1],
-            DatabaseSchema.COLUMN_NAME), null, null,null,null);
-
-    /* Uebertragen des Arrays */
-    exercise.primaryMuscles = cursorToStringArray(cursor);
-
-    cursor.close();
-
-    cursor = database.query(queryTables[2], new String[]{DatabaseSchema.COLUMN_NAME},
-        standardWhereClause(DatabaseSchema.COLUMN_ID_EXERCISE, exercise.name, table_ids[2],
-            DatabaseSchema.COLUMN_NAME), null, null,null,null);
-
-    /* Uebertragen des Arrays */
-    exercise.secondaryMuscles = cursorToStringArray(cursor);
-
-    cursor.close();
   }
 
   /**
