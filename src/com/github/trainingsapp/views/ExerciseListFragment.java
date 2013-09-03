@@ -89,6 +89,9 @@ public class ExerciseListFragment extends Fragment {
     ((ListView) activity.findViewById(R.id.list_view))
         .setOnItemClickListener(mItemListener);
 
+    /* ActionBar Titel aendern */
+    activity.getActionBar().setTitle("TrainingsApp");
+
     super.onResume();
   }
 

@@ -56,6 +56,9 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     final Exercise item = (Exercise) parent.getAdapter().getItem(position);
 
     mDetailFragment.setExercise(item);
+
+    /* ActionBar Titel aendern */
+    getActionBar().setTitle(item.getName());
   }
 
   /*   End   */
