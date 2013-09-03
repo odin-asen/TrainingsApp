@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.views.DetailPagerFragment;
@@ -24,6 +23,7 @@ import com.github.trainingsapp.views.ExerciseListFragment;
  */
 public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
   private DetailPagerFragment mDetailFragment;
+  private ExerciseListFragment mListFragment;
 
   /****************/
   /* Constructors */
@@ -38,9 +38,9 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ExerciseListFragment listFragment = new ExerciseListFragment();
+    mListFragment = new ExerciseListFragment();
     getSupportFragmentManager().beginTransaction().add(
-        R.id.main_container, listFragment).commit();
+        R.id.main_container, mListFragment).commit();
     mDetailFragment = new DetailPagerFragment();
   }
 
@@ -76,14 +76,11 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_sort_muscle:
-        Toast.makeText(this, "Nach Muskeln sortieren", Toast.LENGTH_SHORT)
-            .show();
+        mListFragment.setOrder(ExerciseListFragment.ORDER_BY_MUSCLE);
         break;
       case R.id.action_sort_name:
-        Toast.makeText(this, "Nach Name sortieren", Toast.LENGTH_SHORT)
-            .show();
+        mListFragment.setOrder(ExerciseListFragment.ORDER_BY_NAME);
         break;
-
       default:
         break;
     }

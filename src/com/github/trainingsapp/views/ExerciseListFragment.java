@@ -16,6 +16,8 @@ import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,11 +26,21 @@ import java.util.List;
  * Date: 27.06.13
  */
 public class ExerciseListFragment extends Fragment {
-  private DatabaseAccessor dbAccessor;
+  private DatabaseAccessor mDBAccessor;
   private AdapterView.OnItemClickListener mItemListener;
+
+  public static int ORDER_BY_NOTHING = -1;
+  public static int ORDER_BY_NAME = 0;
+  public static int ORDER_BY_MUSCLE = 1;
+  private int mOrder;
 
   /****************/
   /* Constructors */
+
+  public ExerciseListFragment() {
+    mOrder = ORDER_BY_NOTHING;
+  }
+
   /*     End      */
   /****************/
 
@@ -67,18 +79,51 @@ public class ExerciseListFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    dbAccessor = new DatabaseAccessor(getActivity());
+    mDBAccessor = new DatabaseAccessor(getActivity());
   }
 
   @Override
   public void onResume() {
+    refresh();
+    super.onResume();
+  }
+
+  /**
+   * Holt die Uebungen aus der Datenbank, abhaengig von der Sortierungseinstellung.
+   * mDBAccessor.open() muss vorher aufgerufen werden, wenn nicht schon getan.
+   */
+  private List<DTOExercise> getAllExercises() {
+    List<DTOExercise> exercises = mDBAccessor.getAllExercises();
+    mDBAccessor.fillListObjects(exercises);
+
+    if(mOrder == ORDER_BY_NAME) {
+      Collections.sort(exercises, new NameComparator());
+    } else if(mOrder == ORDER_BY_MUSCLE) {
+      Collections.sort(exercises, new MuscleComparator());
+    }
+
+    return exercises;
+  }
+
+  @Override
+  public void onPause() {
+    mDBAccessor.close();
+    super.onPause();
+  }
+
+  /*   End   */
+  /***********/
+
+  /*******************/
+  /* Private Methods */
+
+  private void refresh() {
     final Activity activity = getActivity();
 
     /* Datenbank oeffnen und Exerciseliste holen. */
-    dbAccessor.open();
+    mDBAccessor.open();
     Converter converter = new Converter(activity);
-    final List<DTOExercise> dtos = dbAccessor.getAllExercises();
-    dbAccessor.fillListObjects(dtos);
+    final List<DTOExercise> dtos = getAllExercises();
     final List<Exercise> values = new ArrayList<Exercise>(dtos.size());
     for (DTOExercise dto : dtos) {
       values.add(converter.fromDTO(dto));
@@ -90,32 +135,46 @@ public class ExerciseListFragment extends Fragment {
         .setOnItemClickListener(mItemListener);
 
     /* ActionBar Titel aendern */
-    activity.getActionBar().setTitle("TrainingsApp");
-
-    super.onResume();
+    activity.getActionBar().setTitle(getString(R.string.app_name));
   }
 
-  @Override
-  public void onPause() {
-    dbAccessor.close();
-    super.onPause();
-  }
-
-  /*   End   */
-  /***********/
-
-  /*******************/
-  /* Private Methods */
   /*       End       */
   /*******************/
 
   /*********************/
   /* Getter and Setter */
+
+  /**
+   * Setzt den Sortierwert und aktualisiert die Liste.
+   * @param orderBy Eine der ORDER_BY-Konstanten.
+   */
+  public void setOrder(int orderBy) {
+    if(orderBy != mOrder) {
+      mOrder = orderBy;
+      refresh();
+    }
+  }
+
   /*        End        */
   /*********************/
 
   /*****************/
   /* Inner classes */
+
+  private class NameComparator implements Comparator<DTOExercise> {
+    @Override
+    public int compare(DTOExercise object, DTOExercise object1) {
+      return object.name.compareTo(object1.name);
+    }
+  }
+
+  /* TODO: sollte bei gleichstand immer weiter geprüft werden, bis keine Muskelpartien übrig sind */
+  private class MuscleComparator implements Comparator<DTOExercise> {
+    @Override
+    public int compare(DTOExercise object, DTOExercise object1) {
+      return object.primaryMuscles[0].compareTo(object1.primaryMuscles[0]);
+    }
+  }
   /*      End      */
   /*****************/
 }
