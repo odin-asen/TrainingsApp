@@ -68,7 +68,7 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.mainmenu, menu);
+    inflater.inflate(R.menu.action_bar_items, menu);
     return true;
   }
 
