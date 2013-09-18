@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+            android:id="@+id/action_sort_name"
+            android:orderInCategory="100"
+            android:showAsAction="always"
+            android:icon="@drawable/ic_action_n_dark"
+            android:title="Settings"/>
+
+    <item
+            android:id="@+id/action_sort_muscle"
+            android:orderInCategory="100"
+            android:showAsAction="always"
+            android:icon="@drawable/ic_action_m_dark"
+            android:title="Refresh"/>
+
+</menu> 
