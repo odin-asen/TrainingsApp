@@ -69,7 +69,7 @@ public class ExerciseListFragment extends Fragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
-      ArrayAdapter<Exercise> adapter = new ExercisArrayAdapter(getActivity(), exercises);
+      ArrayAdapter<Exercise> adapter = new ExerciseArrayAdapter(getActivity(), exercises);
       ((ListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
   }

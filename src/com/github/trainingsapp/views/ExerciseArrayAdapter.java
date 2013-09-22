@@ -2,6 +2,7 @@ package com.github.trainingsapp.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +15,16 @@ import com.github.trainingsapp.business.Exercise;
 import java.util.List;
 
 /**
+ * Diese Klasse verwaltet die Exercise-Objekte und dessen Darstellung.
  * <p/>
  * Author: Timm Herrmann<br/>
  * Date: 22.09.13
  */
-public class ExercisArrayAdapter extends ArrayAdapter<Exercise> {
+public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
 
   private Context mContext;
 
-  public ExercisArrayAdapter(FragmentActivity activity, List<Exercise> exercises) {
+  public ExerciseArrayAdapter(FragmentActivity activity, List<Exercise> exercises) {
     super(activity, android.R.layout.simple_list_item_1, exercises);
     mContext = activity;
   }
@@ -37,8 +39,19 @@ public class ExercisArrayAdapter extends ArrayAdapter<Exercise> {
       row = inflater.inflate(R.layout.exercise_list_item, parent, false);
     }
 
-    ((TextView) row.findViewById(R.id.item_text)).setText(exercise.getName());
+    fillTextView((TextView) row.findViewById(R.id.item_text), exercise);
 
     return row;
+  }
+
+  private void fillTextView(TextView itemTextView, Exercise exercise) {
+    itemTextView.setText(exercise.getName());
+    int drawableID;
+    if (mContext.getString(R.string.amateur).equals(exercise.getDifficulty().getName())) {
+      drawableID = R.drawable.ic_action_n_dark;
+    } else {
+      drawableID = R.drawable.ic_action_m_dark;
+    }
+    itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableID, 0);
   }
 }
