@@ -25,8 +25,15 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   private DetailPagerFragment mDetailFragment;
   private ExerciseListFragment mListFragment;
 
+  private boolean mInDetailView;
+
   /****************/
   /* Constructors */
+
+  public WorkoutListActivity() {
+    mInDetailView = false;
+  }
+
   /*     End      */
   /****************/
 
@@ -61,14 +68,27 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
 
     mDetailFragment.setExercise(item);
 
-    /* ActionBar Titel aendern */
+    /* ActionBar Titel aendern, Knoepfe ausschalten */
     getActionBar().setTitle(item.getName());
+    mInDetailView = true;
+    invalidateOptionsMenu();
+  }
+
+  @Override
+  public void onBackPressed() {
+    /* ActionBar Knoepfe anschalten */
+    mInDetailView = false;
+    invalidateOptionsMenu();
+    super.onBackPressed();
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.action_bar_items, menu);
+    if(mInDetailView)
+      inflater.inflate(R.menu.action_bar_items_detail, menu);
+    else inflater.inflate(R.menu.action_bar_items, menu);
+
     return true;
   }
 
