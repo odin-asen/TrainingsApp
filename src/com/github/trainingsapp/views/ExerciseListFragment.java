@@ -59,7 +59,7 @@ public class ExerciseListFragment extends Fragment {
           + " must implemenet AdapterView.OnItemClickListener");
     }
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
@@ -69,8 +69,7 @@ public class ExerciseListFragment extends Fragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
-      ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(getActivity(),
-          android.R.layout.simple_list_item_1, exercises);
+      ArrayAdapter<Exercise> adapter = new ExercisArrayAdapter(getActivity(), exercises);
       ((ListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
   }
