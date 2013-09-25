@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Equipment;
 import com.github.trainingsapp.business.Exercise;
-import com.github.trainingsapp.business.Muscle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,26 +38,13 @@ public class DetailPagerFragment extends Fragment {
     viewPager.setAdapter(mDetailPagerAdapter);
 
     String NEW_LINE = "<p/>";
-    String primaryMuscles = "Primaer: ";
-    for (Muscle muscle : mExercise.getPrimaryMuscles()) {
-      primaryMuscles = primaryMuscles + muscle.toString()+", ";
-    }
-    primaryMuscles = primaryMuscles + NEW_LINE;
-
-    String secondaryMuscles = "Sekundaer: ";
-    for (Muscle muscle : mExercise.getSecondaryMuscles()) {
-      secondaryMuscles = secondaryMuscles + muscle.toString()+", ";
-    }
-    secondaryMuscles = secondaryMuscles + NEW_LINE;
-
-    String equipments = "Geraet: ";
+    String equipments = " ";
     for (Equipment equipment : mExercise.getEquipmentList()) {
       equipments = equipments + equipment.toString()+", ";
     }
     equipments = equipments + NEW_LINE;
-    TextView textView = (TextView) mRootView.findViewById(R.id.detail_text);
-    textView.setText(
-        Html.fromHtml(mExercise.getName()+NEW_LINE+"Diff: "+mExercise.getDifficulty()+NEW_LINE+primaryMuscles+secondaryMuscles+equipments));
+    TextView textView = (TextView) mRootView.findViewById(R.id.equipment_text);
+    textView.setText(Html.fromHtml(equipments));
 
     return mRootView;
   }
