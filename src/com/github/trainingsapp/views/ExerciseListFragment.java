@@ -167,11 +167,35 @@ public class ExerciseListFragment extends Fragment {
     }
   }
 
-  /* TODO: sollte bei gleichstand immer weiter geprüft werden, bis keine Muskelpartien übrig sind */
   private class MuscleComparator implements Comparator<DTOExercise> {
+    private final int RESULT_EQUAL = 0;
+
     @Override
     public int compare(DTOExercise object, DTOExercise object1) {
-      return object.primaryMuscles[0].compareTo(object1.primaryMuscles[0]);
+      /* Vergleiche Primaermuskeln */
+      final int compareResult = compareStringArrays(object.primaryMuscles, object1.primaryMuscles);
+      if(compareResult == RESULT_EQUAL) {
+        /* Vergleiche Sekundaermuskeln */
+        return compareStringArrays(object.secondaryMuscles, object1.secondaryMuscles);
+      } else {
+        if(compareResult > RESULT_EQUAL)
+          return 1;
+        else return -1;
+      }
+    }
+
+    private int compareStringArrays(String[] thisArray, String[] thatArray) {
+      for (String thisString : thisArray) {
+        for (String thatString : thatArray) {
+          final int compareResult = thisString.compareTo(thatString);
+          if(compareResult > RESULT_EQUAL)
+            return 1;
+          else if(compareResult < RESULT_EQUAL)
+            return -1;
+        }
+      }
+
+      return RESULT_EQUAL;
     }
   }
   /*      End      */
