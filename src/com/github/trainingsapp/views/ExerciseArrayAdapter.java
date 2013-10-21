@@ -49,7 +49,7 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
     if (mContext.getString(R.string.amateur).equals(exercise.getDifficulty().getName())) {
       drawableID = R.drawable.ic_action_n_dark;
     } else {
-      drawableID = R.drawable.ic_action_m_dark;
+      drawableID = R.drawable.ic_action_sort_muscle;
     }
     itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableID, 0);
   }

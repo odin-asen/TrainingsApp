@@ -7,11 +7,12 @@
 
   <!--Uebungsnamen-->
   <string name="kniebeuge">Kniebeuge</string>
-  <string name="dips_brust">Dips (Brust)</string>
-  <string name="dips_trizeps">Dips (Trizeps)</string>
-  <string name="hantel">Hantel</string>
-  <string name="klimmzug">Klimmzug</string>
-  <string name="power">Eurotraining</string>
+  <string name="liegestuetze_brust">Liegestütze</string>
+  <string name="klimmzug_breit_1">Klimmzug (breit)</string>
+  <string name="liegestuetze_handstand">Handstandliegestütze</string>
+  <string name="extensions">Extensions</string>
+  <string name="chin_ups">Chin-Ups</string>
+  <string name="knieheben_haengend">Knieheben (hängend)</string>
 
   <!--Schwierigkeitsstufen-->
   <string name="amateur">Amateur</string>
@@ -22,6 +23,8 @@
   <string name="stange">Stange</string>
   <string name="kurzhantel">Kurzhantel</string>
   <string name="reck">Reck</string>
+  <string name="klotz">Klotz</string>
+  <string name="wand">Wand</string>
 
   <!--Muskeln-->
   <string name="bizeps">Bizeps</string>
@@ -30,5 +33,6 @@
   <string name="brust">Brust</string>
   <string name="unterarm">Unterarm</string>
   <string name="ruecken">Ruecken</string>
+  <string name="bauch">Bauch</string>
 
 </resources>

@@ -11,7 +11,7 @@
             android:id="@+id/action_sort_muscle"
             android:orderInCategory="100"
             android:showAsAction="always"
-            android:icon="@drawable/ic_action_m_dark"
+            android:icon="@drawable/ic_action_sort_muscle"
             android:title="Refresh"/>
 
 </menu> 
