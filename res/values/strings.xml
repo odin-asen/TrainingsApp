@@ -3,7 +3,7 @@
   <string name="app_name">TrainingsApp</string>
 
   <!--Android Widgets-->
-  <string name="label_equipment">Geräte:</string>
+  <string name="label_equipment"><u><font size="30">Geräte</font></u></string>
 
   <!--Uebungsnamen-->
   <string name="kniebeuge">Kniebeuge</string>

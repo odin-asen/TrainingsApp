@@ -1,5 +1,6 @@
 package com.github.trainingsapp.views;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Equipment;
@@ -45,6 +47,23 @@ public class DetailPagerFragment extends Fragment {
     equipments = equipments + NEW_LINE;
     TextView textView = (TextView) mRootView.findViewById(R.id.equipment_text);
     textView.setText(Html.fromHtml(equipments));
+
+    /* TextView Element zum horizontalen Layout hinzufuegen */
+    final LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.equipment_text_layout);
+
+    for (Equipment equipment : mExercise.getEquipmentList()) {
+      final TextView view = new TextView(getActivity());
+      view.setText(equipment.toString());
+      view.setLayoutParams(new ViewGroup.LayoutParams(
+          ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+      layout.addView(view);
+    }
+
+    final TextView bla = new TextView(getActivity());
+    bla.setText("neues");
+    layout.addView(bla);
+
+    layout.invalidate();
 
     return mRootView;
   }
