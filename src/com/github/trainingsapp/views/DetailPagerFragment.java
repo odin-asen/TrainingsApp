@@ -39,31 +39,7 @@ public class DetailPagerFragment extends Fragment {
     viewPager.setOffscreenPageLimit(PAGE_COUNT);
     viewPager.setAdapter(mDetailPagerAdapter);
 
-    String NEW_LINE = "<p/>";
-    String equipments = " ";
-    for (Equipment equipment : mExercise.getEquipmentList()) {
-      equipments = equipments + equipment.toString()+", ";
-    }
-    equipments = equipments + NEW_LINE;
-    TextView textView = (TextView) mRootView.findViewById(R.id.equipment_text);
-    textView.setText(Html.fromHtml(equipments));
-
-    /* TextView Element zum horizontalen Layout hinzufuegen */
-    final LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.equipment_text_layout);
-
-    for (Equipment equipment : mExercise.getEquipmentList()) {
-      final TextView view = new TextView(getActivity());
-      view.setText(equipment.toString());
-      view.setLayoutParams(new ViewGroup.LayoutParams(
-          ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-      layout.addView(view);
-    }
-
-    final TextView bla = new TextView(getActivity());
-    bla.setText("neues");
-    layout.addView(bla);
-
-    layout.invalidate();
+    setEquipmentTextViews();
 
     return mRootView;
   }
@@ -78,6 +54,19 @@ public class DetailPagerFragment extends Fragment {
         fragments);
   }
 
+  /*********************/
+  /* Getter and Setter */
+
+  public void setExercise(Exercise exercise) {
+    mExercise = exercise;
+  }
+
+  /*        End        */
+  /*********************/
+
+  /*******************/
+  /* Private Methods */
+
   private List<Fragment> getFragments(){
     if(mExercise == null)
       return new ArrayList<Fragment>(0);
@@ -91,7 +80,28 @@ public class DetailPagerFragment extends Fragment {
     return fList;
   }
 
-  public void setExercise(Exercise exercise) {
-    mExercise = exercise;
+  /** TextView Element zum horizontalen Layout hinzufuegen */
+  private void setEquipmentTextViews() {
+    final LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.equipment_text_layout);
+
+    for (Equipment equipment : mExercise.getEquipmentList()) {
+      final TextView view = createEquipmentTextView(equipment.toString());
+      layout.addView(view);
+    }
+
+    layout.invalidate();
   }
+
+  private TextView createEquipmentTextView(String equipment) {
+    final TextView textView = new TextView(getActivity());
+    textView.setText(equipment);
+    textView.setLayoutParams(new ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    textView.setPadding(5,0,5,5);
+
+    return textView;
+  }
+
+  /*       End       */
+  /*******************/
 }
