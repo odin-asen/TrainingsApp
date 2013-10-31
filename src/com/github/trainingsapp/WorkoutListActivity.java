@@ -1,5 +1,6 @@
 package com.github.trainingsapp;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,9 +10,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.views.DetailPagerFragment;
+import com.github.trainingsapp.views.EquipmentFragment;
 import com.github.trainingsapp.views.ExerciseListFragment;
 
 /**
@@ -21,9 +24,10 @@ import com.github.trainingsapp.views.ExerciseListFragment;
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
+public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener, TextView.OnClickListener {
   private DetailPagerFragment mDetailFragment;
   private ExerciseListFragment mListFragment;
+  private EquipmentFragment mEquipmentFragment;
 
   private boolean mInDetailView;
 
@@ -48,7 +52,6 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     mListFragment = new ExerciseListFragment();
     getSupportFragmentManager().beginTransaction().add(
         R.id.main_container, mListFragment).commit();
-    mDetailFragment = new DetailPagerFragment();
   }
 
   @Override
@@ -75,6 +78,28 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   }
 
   @Override
+  public void onClick(View v) {
+    mEquipmentFragment = new EquipmentFragment();
+    TextView clickedView = (TextView) v;
+    Drawable drawable = (Drawable) clickedView.getTag();
+
+    final FragmentManager manager = getSupportFragmentManager();
+
+    /* DetailFragment verstecken und das Unterlayout mit */
+    /* EquipmentFragment Objekt besetzen. */
+    FragmentTransaction transaction = manager.beginTransaction();
+    transaction.hide(mDetailFragment);
+    transaction.replace(R.id.sub_container, mEquipmentFragment);
+    transaction.addToBackStack(null);
+    transaction.commit();
+
+    mEquipmentFragment.setImage(drawable);
+
+    /* ActionBar Titel aendern, Knoepfe ausschalten */
+    getActionBar().setTitle(clickedView.getText());
+  }
+
+  @Override
   public void onBackPressed() {
     /* ActionBar Knoepfe anschalten */
     mInDetailView = false;
@@ -96,10 +121,12 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_sort_muscle:
-        mListFragment.setOrder(ExerciseListFragment.ORDER_BY_MUSCLE);
+        if(mListFragment.isVisible())
+          mListFragment.setOrder(ExerciseListFragment.ORDER_BY_MUSCLE);
         break;
       case R.id.action_sort_name:
-        mListFragment.setOrder(ExerciseListFragment.ORDER_BY_NAME);
+        if(mListFragment.isVisible())
+          mListFragment.setOrder(ExerciseListFragment.ORDER_BY_NAME);
         break;
       default:
         break;

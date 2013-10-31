@@ -1,13 +1,13 @@
 package com.github.trainingsapp.views;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.R;
@@ -23,9 +23,11 @@ public class DetailPagerFragment extends Fragment {
   private DetailPagerAdapter mDetailPagerAdapter;
   private Exercise mExercise;
   private View mRootView;
+  private TextView.OnClickListener mOnClickListener;
 
   public DetailPagerFragment() {
     mExercise = null;
+    mOnClickListener = null;
   }
 
   @Override
@@ -42,6 +44,19 @@ public class DetailPagerFragment extends Fragment {
     setEquipmentTextViews();
 
     return mRootView;
+  }
+
+  @Override
+  /** Activity muss TextView.OnClickListener implementieren. */
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+
+    if (activity instanceof TextView.OnClickListener) {
+      mOnClickListener = (TextView.OnClickListener) activity;
+    } else {
+      throw new ClassCastException(activity.toString()
+          + " must implemenet TextView.OnClickListener");
+    }
   }
 
   @Override
@@ -85,23 +100,37 @@ public class DetailPagerFragment extends Fragment {
     final LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.equipment_text_layout);
 
     for (Equipment equipment : mExercise.getEquipmentList()) {
-      final TextView view = createEquipmentTextView(equipment.toString());
+      final TextView view = createEquipmentTextView(equipment);
       layout.addView(view);
     }
 
     layout.invalidate();
   }
 
-  private TextView createEquipmentTextView(String equipment) {
+  private TextView createEquipmentTextView(Equipment equipment) {
+    final String equipmentText = equipment.getName();
+    final String noEquipment = getString(R.string.nichts);
     final TextView textView = new TextView(getActivity());
-    textView.setText(equipment);
+
+    textView.setText(equipmentText);
     textView.setLayoutParams(new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     textView.setPadding(5,0,5,5);
+
+    /* TextView wird klickbar gemacht */
+    if(!noEquipment.equals(equipmentText)) {
+      textView.setOnClickListener(mOnClickListener);
+      textView.setTag(equipment.getImage());
+    }
 
     return textView;
   }
 
   /*       End       */
   /*******************/
+
+  /*****************/
+  /* Inner Classes */
+  /*      End      */
+  /*****************/
 }

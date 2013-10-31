@@ -2,6 +2,8 @@ package com.github.trainingsapp.business;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import com.github.trainingsapp.dto.DTOExercise;
 
 import java.util.ArrayList;
@@ -60,7 +62,9 @@ public class Converter {
     final List<Equipment> modelList = new ArrayList<Equipment>(dtoArray.length);
     for (String value : dtoArray) {
       int equipmentRID = mRes.getIdentifier(value, TYPE_STRING, PKG_NAME);
-      modelList.add(new Equipment(mRes.getString(equipmentRID)));
+      int equipmentImageID = mRes.getIdentifier(value, TYPE_DRAWABLE, PKG_NAME);
+      final Drawable drawable = getSafeDrawable(equipmentImageID);
+      modelList.add(new Equipment(mRes.getString(equipmentRID), drawable));
     }
     return modelList;
   }
@@ -92,6 +96,16 @@ public class Converter {
 
   /*******************/
   /* Private Methods */
+
+  /** Gibt null zurueck, wenn die Ressource nicht existiert. */
+  private Drawable getSafeDrawable(int drawableID) {
+    try {
+      return mRes.getDrawable(drawableID);
+    } catch (Resources.NotFoundException ex) {
+      Log.w(Converter.class.getName(), "Could not find drawable");
+      return null;
+    }
+  }
   /*       End       */
   /*******************/
 
