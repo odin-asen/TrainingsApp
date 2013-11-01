@@ -72,9 +72,7 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     mDetailFragment.setExercise(item);
 
     /* ActionBar Titel aendern, Knoepfe ausschalten */
-    getActionBar().setTitle(item.getName());
-    mInDetailView = true;
-    invalidateOptionsMenu();
+    changeActionBar(item.getName(), true);
   }
 
   @Override
@@ -96,25 +94,23 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     mEquipmentFragment.setImage(drawable);
 
     /* ActionBar Titel aendern, Knoepfe ausschalten */
-    getActionBar().setTitle(clickedView.getText());
+    changeActionBar(clickedView.getText(), true);
   }
 
   @Override
   public void onBackPressed() {
     /* ActionBar Knoepfe anschalten */
-    mInDetailView = false;
-    invalidateOptionsMenu();
     super.onBackPressed();
+
+    changeActionBar(null, !mListFragment.isVisible());
+    invalidateOptionsMenu();
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    if(mInDetailView)
-      inflater.inflate(R.menu.action_bar_items_detail, menu);
-    else inflater.inflate(R.menu.action_bar_items, menu);
+    getMenuInflater().inflate(R.menu.action_bar_items, menu);
 
-    return true;
+    return !mInDetailView;
   }
 
   @Override
@@ -140,6 +136,18 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
 
   /*******************/
   /* Private Methods */
+
+  /**
+   *  Aendert den Titel der ActionBar, wenn der Parameter nicht null ist
+   *  und setzt die Knoepfe je nach View.
+   */
+  private void changeActionBar(CharSequence clickedViewText, boolean inDetailView) {
+    if(clickedViewText != null)
+      getActionBar().setTitle(clickedViewText);
+    mInDetailView = inDetailView;
+    invalidateOptionsMenu();
+  }
+
   /*       End       */
   /*******************/
 

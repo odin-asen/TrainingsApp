@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.R;
@@ -29,6 +26,9 @@ public class DetailPagerFragment extends Fragment {
     mExercise = null;
     mOnClickListener = null;
   }
+
+  /***********/
+  /* Methods */
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +68,18 @@ public class DetailPagerFragment extends Fragment {
     mDetailPagerAdapter = new DetailPagerAdapter(getChildFragmentManager(),
         fragments);
   }
+
+  @Override
+  public void onHiddenChanged(boolean hidden) {
+    if(!hidden) {
+      getActivity().getActionBar().setTitle(mExercise.getName());
+    }
+
+    super.onHiddenChanged(hidden);
+  }
+
+  /*   End   */
+  /***********/
 
   /*********************/
   /* Getter and Setter */
