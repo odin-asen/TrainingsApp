@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Diese Klasse verwaltet die Exercise-Objekte und dessen Darstellung.
@@ -19,19 +19,75 @@ import java.util.List;
  * Author: Timm Herrmann<br/>
  * Date: 22.09.13
  */
-public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
+public class ExerciseArrayAdapter extends BaseExpandableListAdapter {
 
   private Context mContext;
+  private Map<String, List<Exercise>> mExercisesMap;
+  private List<String> mGroupList;
 
-  public ExerciseArrayAdapter(FragmentActivity activity, List<Exercise> exercises) {
-    super(activity, android.R.layout.simple_list_item_1, exercises);
+  public ExerciseArrayAdapter(FragmentActivity activity, List<String> groupList,
+                              Map<String, List<Exercise>> exerciseMap) {
     mContext = activity;
+    mGroupList = groupList;
+    mExercisesMap = exerciseMap;
+  }
+
+  /*****************************/
+  /* BaseExpandableListAdapter */
+
+  @Override
+  public int getGroupCount() {
+    return mGroupList.size();
   }
 
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  public int getChildrenCount(int groupPosition) {
+    return mExercisesMap.get(mGroupList.get(groupPosition)).size();
+  }
+
+  @Override
+  public Object getGroup(int groupPosition) {
+    return mGroupList.get(groupPosition);
+  }
+
+  @Override
+  public Object getChild(int groupPosition, int childPosition) {
+    return mExercisesMap.get(mGroupList.get(groupPosition)).get(childPosition);
+  }
+
+  @Override
+  public long getGroupId(int groupPosition) {
+    return groupPosition;
+  }
+
+  @Override
+  public long getChildId(int groupPosition, int childPosition) {
+    return childPosition;
+  }
+
+  @Override
+  public boolean hasStableIds() {
+    return false;
+  }
+
+  @Override
+  public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     View row = convertView;
-    Exercise exercise = getItem(position);
+
+    if(row == null) {
+      LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+      row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+    }
+
+    ((TextView) row.findViewById(android.R.id.text1)).setText(mGroupList.get(groupPosition));
+
+    return row;
+  }
+
+  @Override
+  public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    View row = convertView;
+    Exercise exercise = mExercisesMap.get(mGroupList.get(groupPosition)).get(childPosition);
 
     if(row == null) {
       LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -42,6 +98,14 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
 
     return row;
   }
+
+  @Override
+  public boolean isChildSelectable(int groupPosition, int childPosition) {
+    return true;
+  }
+
+  /*            End            */
+  /*****************************/
 
   private void fillTextView(TextView itemTextView, Exercise exercise) {
     itemTextView.setText(exercise.getName());

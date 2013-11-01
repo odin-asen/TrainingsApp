@@ -3,22 +3,18 @@ package com.github.trainingsapp.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
 import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p/>
@@ -64,14 +60,6 @@ public class ExerciseListFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     return inflater.inflate(R.layout.exercise_list, container, false);
-  }
-
-  /** Setzt Exercise-Objekte in die Liste. */
-  public void setExercises(List<Exercise> exercises) {
-    if(getActivity() != null) {
-      ArrayAdapter<Exercise> adapter = new ExerciseArrayAdapter(getActivity(), exercises);
-      ((ListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
-    }
   }
 
   @Override
@@ -137,6 +125,59 @@ public class ExerciseListFragment extends Fragment {
     activity.getActionBar().setTitle(getString(R.string.app_name));
   }
 
+  private List<String> getAlphabeticalGroup(List<Exercise> exercises) {
+    /* Nach Namen sortierte Liste */
+    Collections.sort(exercises, new Comparator<Exercise>() {
+      @Override
+      public int compare(Exercise lhs, Exercise rhs) {
+        return lhs.getName().compareTo(rhs.getName());
+      }
+    });
+
+    /* Erstelle eine Liste mit den ersten Buchstaben des Alphabets,
+     * die auch erster Buchstabe in den Uebungen sind. Jeder Buchstabe kommt
+     * in der Liste nur einmal vor. */
+    final List<String> alphabeticalGroup = new ArrayList<String>();
+    String firstCharacter = exercises.get(0).getName().substring(0,1);
+    alphabeticalGroup.add(firstCharacter);
+
+    for (Exercise exercise : exercises) {
+      final String currentFirstCharacter = exercise.getName().substring(0,1);
+      if(!firstCharacter.equals(currentFirstCharacter)) {
+        firstCharacter = currentFirstCharacter;
+        alphabeticalGroup.add(firstCharacter);
+      }
+    }
+
+    return alphabeticalGroup;
+  }
+
+  private Map<String, List<Exercise>> getAlphabeticalExercises(List<String> group, List<Exercise> exercises) {
+    /* Nach Namen sortierte Liste */
+    Collections.sort(exercises, new Comparator<Exercise>() {
+      @Override
+      public int compare(Exercise lhs, Exercise rhs) {
+        return lhs.getName().compareTo(rhs.getName());
+      }
+    });
+
+    /* Erstelle eine Map, die Listen mit Uebungen enthaelt. Uebungen mit gleichen
+     * Anfangsbuchstaben sind in einer Liste. */
+    final Map<String, List<Exercise>> alphabeticalExercises = new ArrayMap<String, List<Exercise>>(group.size());
+    /* Gruppen initialisieren */
+    for (String s : group) {
+      alphabeticalExercises.put(s, new ArrayList<Exercise>(2));
+    }
+
+    /* Listen fuellen */
+    for (Exercise exercise : exercises) {
+      final String firstCharacter = exercise.getName().substring(0,1);
+      alphabeticalExercises.get(firstCharacter).add(exercise);
+    }
+
+    return alphabeticalExercises;
+   }
+
   /*       End       */
   /*******************/
 
@@ -151,6 +192,17 @@ public class ExerciseListFragment extends Fragment {
     if(orderBy != mOrder) {
       mOrder = orderBy;
       refresh();
+    }
+  }
+
+  /** Setzt Exercise-Objekte in die Liste. */
+  public void setExercises(List<Exercise> exercises) {
+    if(getActivity() != null) {
+      List<String> alphabeticalOrder = getAlphabeticalGroup(exercises);
+      Map<String, List<Exercise>> alphabeticalExercise = getAlphabeticalExercises(alphabeticalOrder, exercises);
+      ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(),
+          alphabeticalOrder, alphabeticalExercise);
+      ((ExpandableListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
   }
 
