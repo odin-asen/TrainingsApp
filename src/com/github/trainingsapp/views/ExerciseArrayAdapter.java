@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
+import com.github.trainingsapp.business.container.CategoryContainer;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,12 @@ public class ExerciseArrayAdapter extends BaseExpandableListAdapter {
   private Context mContext;
   private Map<String, List<Exercise>> mExercisesMap;
   private List<String> mGroupList;
+
+  public ExerciseArrayAdapter(FragmentActivity activity, CategoryContainer<String,Exercise> container) {
+    mContext = activity;
+    mExercisesMap = container.getAllElements();
+    mGroupList = container.getCategories();
+  }
 
   public ExerciseArrayAdapter(FragmentActivity activity, List<String> groupList,
                               Map<String, List<Exercise>> exerciseMap) {
