@@ -3,18 +3,24 @@ package com.github.trainingsapp.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
+import com.github.trainingsapp.business.container.CategoryContainer;
+import com.github.trainingsapp.business.container.ExerciseNameContainer;
 import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * <p/>
@@ -76,18 +82,12 @@ public class ExerciseListFragment extends Fragment {
   }
 
   /**
-   * Holt die Uebungen aus der Datenbank, abhaengig von der Sortierungseinstellung.
+   * Holt die Uebungen aus der Datenbank, unabhaengig von der Sortierungseinstellung.
    * mDBAccessor.open() muss vorher aufgerufen werden, wenn nicht schon getan.
    */
   private List<DTOExercise> getAllExercises() {
     List<DTOExercise> exercises = mDBAccessor.getAllExercises();
     mDBAccessor.fillListObjects(exercises);
-
-    if(mOrder == ORDER_BY_NAME) {
-      Collections.sort(exercises, new NameComparator());
-    } else if(mOrder == ORDER_BY_MUSCLE) {
-      Collections.sort(exercises, new MuscleComparator());
-    }
 
     return exercises;
   }
@@ -125,59 +125,6 @@ public class ExerciseListFragment extends Fragment {
     activity.getActionBar().setTitle(getString(R.string.app_name));
   }
 
-  private List<String> getAlphabeticalGroup(List<Exercise> exercises) {
-    /* Nach Namen sortierte Liste */
-    Collections.sort(exercises, new Comparator<Exercise>() {
-      @Override
-      public int compare(Exercise lhs, Exercise rhs) {
-        return lhs.getName().compareTo(rhs.getName());
-      }
-    });
-
-    /* Erstelle eine Liste mit den ersten Buchstaben des Alphabets,
-     * die auch erster Buchstabe in den Uebungen sind. Jeder Buchstabe kommt
-     * in der Liste nur einmal vor. */
-    final List<String> alphabeticalGroup = new ArrayList<String>();
-    String firstCharacter = exercises.get(0).getName().substring(0,1);
-    alphabeticalGroup.add(firstCharacter);
-
-    for (Exercise exercise : exercises) {
-      final String currentFirstCharacter = exercise.getName().substring(0,1);
-      if(!firstCharacter.equals(currentFirstCharacter)) {
-        firstCharacter = currentFirstCharacter;
-        alphabeticalGroup.add(firstCharacter);
-      }
-    }
-
-    return alphabeticalGroup;
-  }
-
-  private Map<String, List<Exercise>> getAlphabeticalExercises(List<String> group, List<Exercise> exercises) {
-    /* Nach Namen sortierte Liste */
-    Collections.sort(exercises, new Comparator<Exercise>() {
-      @Override
-      public int compare(Exercise lhs, Exercise rhs) {
-        return lhs.getName().compareTo(rhs.getName());
-      }
-    });
-
-    /* Erstelle eine Map, die Listen mit Uebungen enthaelt. Uebungen mit gleichen
-     * Anfangsbuchstaben sind in einer Liste. */
-    final Map<String, List<Exercise>> alphabeticalExercises = new ArrayMap<String, List<Exercise>>(group.size());
-    /* Gruppen initialisieren */
-    for (String s : group) {
-      alphabeticalExercises.put(s, new ArrayList<Exercise>(2));
-    }
-
-    /* Listen fuellen */
-    for (Exercise exercise : exercises) {
-      final String firstCharacter = exercise.getName().substring(0,1);
-      alphabeticalExercises.get(firstCharacter).add(exercise);
-    }
-
-    return alphabeticalExercises;
-   }
-
   /*       End       */
   /*******************/
 
@@ -198,10 +145,10 @@ public class ExerciseListFragment extends Fragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
-      List<String> alphabeticalOrder = getAlphabeticalGroup(exercises);
-      Map<String, List<Exercise>> alphabeticalExercise = getAlphabeticalExercises(alphabeticalOrder, exercises);
-      ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(),
-          alphabeticalOrder, alphabeticalExercise);
+      final CategoryContainer<String,Exercise> container = new ExerciseNameContainer(exercises);
+//      List<String> alphabeticalOrder = getAlphabeticalGroup(exercises);
+//      Map<String, List<Exercise>> alphabeticalExercise = getAlphabeticalExercises(alphabeticalOrder, exercises);
+      ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(), container);
       ((ExpandableListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
   }
@@ -211,13 +158,6 @@ public class ExerciseListFragment extends Fragment {
 
   /*****************/
   /* Inner classes */
-
-  private class NameComparator implements Comparator<DTOExercise> {
-    @Override
-    public int compare(DTOExercise object, DTOExercise object1) {
-      return object.name.compareTo(object1.name);
-    }
-  }
 
   private class MuscleComparator implements Comparator<DTOExercise> {
     private final int RESULT_EQUAL = 0;

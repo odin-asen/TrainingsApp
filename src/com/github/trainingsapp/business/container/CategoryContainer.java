@@ -1,7 +1,6 @@
 package com.github.trainingsapp.business.container;
 
 import android.support.v4.util.ArrayMap;
-import com.github.trainingsapp.business.Exercise;
 
 import java.util.*;
 
@@ -23,10 +22,14 @@ public abstract class CategoryContainer<C,E> {
   /**
    * Das uergebene Array wird nicht veraendert. Es wird in ein anderes Array kopiert und
    * dieses sortiert.
+   * @param elements Darf nicht leer oder null sein.
+   * @param sortingCondition Darf nicht null sein.
    */
   public CategoryContainer(List<E> elements, Comparator<E> sortingCondition) {
+    assert (elements == null) || elements.isEmpty() || (sortingCondition == null);
+
     final List<E> sortedElements = new ArrayList<E>(elements.size());
-    Collections.copy(sortedElements, elements);
+    addListElements(sortedElements, elements);
 
     Collections.sort(sortedElements, sortingCondition);
     setCategories(sortedElements);
@@ -38,7 +41,7 @@ public abstract class CategoryContainer<C,E> {
    */
   public List<C> getCategories() {
     final List<C> categories = new ArrayList<C>(mCategories.size());
-    Collections.copy(categories, mCategories);
+    addListElements(categories, mCategories);
     return categories;
   }
 
@@ -48,7 +51,7 @@ public abstract class CategoryContainer<C,E> {
   public List<E> getElements(C category) {
     final List<E> originalList = mAllElements.get(category);
     final List<E> elements = new ArrayList<E>(originalList.size());
-    Collections.copy(elements, originalList);
+    addListElements(elements, originalList);
     return elements;
   }
 
@@ -74,12 +77,24 @@ public abstract class CategoryContainer<C,E> {
    */
   abstract protected void setMapElements(List<E> elements);
 
+  /*******************/
+  /* Private Methods */
+
   private void copyAllElementsToMap(Set<C> keySet, Map<C, List<E>> map) {
     for (C category : keySet) {
       final List<E> originalList = mAllElements.get(category);
       final List<E> elements = new ArrayList<E>(originalList.size());
-      Collections.copy(elements, originalList);
+      addListElements(elements, originalList);
       map.put(category, elements);
     }
   }
+
+  private <T> void addListElements(List<T> destination, List<T> source) {
+    for (T element : source) {
+      destination.add(element);
+    }
+  }
+
+  /*       End       */
+  /*******************/
 }
