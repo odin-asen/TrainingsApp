@@ -19,7 +19,6 @@ import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -146,8 +145,7 @@ public class ExerciseListFragment extends Fragment {
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
       final CategoryContainer<String,Exercise> container = new ExerciseNameContainer(exercises);
-//      List<String> alphabeticalOrder = getAlphabeticalGroup(exercises);
-//      Map<String, List<Exercise>> alphabeticalExercise = getAlphabeticalExercises(alphabeticalOrder, exercises);
+
       ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(), container);
       ((ExpandableListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
@@ -155,41 +153,4 @@ public class ExerciseListFragment extends Fragment {
 
   /*        End        */
   /*********************/
-
-  /*****************/
-  /* Inner classes */
-
-  private class MuscleComparator implements Comparator<DTOExercise> {
-    private final int RESULT_EQUAL = 0;
-
-    @Override
-    public int compare(DTOExercise object, DTOExercise object1) {
-      /* Vergleiche Primaermuskeln */
-      final int compareResult = compareStringArrays(object.primaryMuscles, object1.primaryMuscles);
-      if(compareResult == RESULT_EQUAL) {
-        /* Vergleiche Sekundaermuskeln */
-        return compareStringArrays(object.secondaryMuscles, object1.secondaryMuscles);
-      } else {
-        if(compareResult > RESULT_EQUAL)
-          return 1;
-        else return -1;
-      }
-    }
-
-    private int compareStringArrays(String[] thisArray, String[] thatArray) {
-      for (String thisString : thisArray) {
-        for (String thatString : thatArray) {
-          final int compareResult = thisString.compareTo(thatString);
-          if(compareResult > RESULT_EQUAL)
-            return 1;
-          else if(compareResult < RESULT_EQUAL)
-            return -1;
-        }
-      }
-
-      return RESULT_EQUAL;
-    }
-  }
-  /*      End      */
-  /*****************/
 }

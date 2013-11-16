@@ -53,7 +53,7 @@ public class Converter {
     final List<Muscle> modelList = new ArrayList<Muscle>(dtoArray.length);
     for (String value : dtoArray) {
       int muscleRID = mRes.getIdentifier(value, TYPE_STRING, PKG_NAME);
-      modelList.add(new Muscle(mRes.getString(muscleRID)));
+      modelList.add(new Muscle(mRes.getString(muscleRID), 0)); /* TODO Priorität in einer Android Ressourcendatei festlegen */
     }
     return modelList;
   }

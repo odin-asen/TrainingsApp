@@ -8,16 +8,26 @@ package com.github.trainingsapp.business;
  */
 public class Muscle {
   private String mName;
+  /**
+   * Beschreibt die Prioritaet, die eine Muskelpartie in der zeitlichen Reihenfolge
+   * bei einem Ganzkoerpertraining einnimmt. */
+  private int mExercisePriority;
 
-  Muscle(String name) {
+  Muscle(String name, int priority) {
     mName = name;
+    mExercisePriority = priority;
   }
 
   public String getName() {
     return mName;
   }
 
+  /** Gibt einen Wert fuer die trainingslogische Prioritaet zurueck. */
+  public int getPriority() {
+    return mExercisePriority;
+  }
+
   public String toString() {
-    return mName;
+    return mName+" "+mExercisePriority;
   }
 }
