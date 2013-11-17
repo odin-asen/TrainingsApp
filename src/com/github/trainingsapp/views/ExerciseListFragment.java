@@ -6,10 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
@@ -29,7 +27,7 @@ import java.util.List;
  */
 public class ExerciseListFragment extends Fragment {
   private DatabaseAccessor mDBAccessor;
-  private AdapterView.OnItemClickListener mItemListener;
+  private ExpandableListView.OnChildClickListener mItemListener;
 
   public static int ORDER_BY_NOTHING = -1;
   public static int ORDER_BY_NAME = 0;
@@ -50,15 +48,15 @@ public class ExerciseListFragment extends Fragment {
   /* Methods */
 
   @Override
-  /** Activity muss AdapterView.OnItemClickListener implementieren. */
+  /** Activity muss ExpandableListView.OnChildClickListener implementieren. */
   public void onAttach(Activity activity) {
     super.onAttach(activity);
 
-    if (activity instanceof AdapterView.OnItemClickListener) {
-      mItemListener = (AdapterView.OnItemClickListener) activity;
+    if (activity instanceof ExpandableListView.OnChildClickListener) {
+      mItemListener = (ExpandableListView.OnChildClickListener) activity;
     } else {
       throw new ClassCastException(activity.toString()
-          + " must implemenet AdapterView.OnItemClickListener");
+          + " must implement ExpandableListView.OnChildClickListener");
     }
   }
 
@@ -118,8 +116,8 @@ public class ExerciseListFragment extends Fragment {
 
     /* Exerciseliste und OnItemClickListener setzen */
     setExercises(values);
-    ((ListView) activity.findViewById(R.id.list_view))
-        .setOnItemClickListener(mItemListener);
+    ((ExpandableListView) activity.findViewById(R.id.list_view))
+        .setOnChildClickListener(mItemListener);
 
     /* ActionBar Titel aendern */
     activity.getActionBar().setTitle(getString(R.string.app_name));

@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.business.container.CategoryContainer;
@@ -83,10 +84,10 @@ public class ExerciseArrayAdapter extends BaseExpandableListAdapter {
 
     if(row == null) {
       LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-      row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+      row = inflater.inflate(R.layout.exercise_group_item, parent, false);
     }
 
-    ((TextView) row.findViewById(android.R.id.text1)).setText(mGroupList.get(groupPosition));
+    ((TextView) row.findViewById(R.id.group_text)).setText(mGroupList.get(groupPosition));
 
     return row;
   }
@@ -116,12 +117,14 @@ public class ExerciseArrayAdapter extends BaseExpandableListAdapter {
 
   private void fillTextView(TextView itemTextView, Exercise exercise) {
     itemTextView.setText(exercise.getName());
+
     int drawableID;
     if (mContext.getString(R.string.amateur).equals(exercise.getDifficulty().getName())) {
       drawableID = R.drawable.ic_action_n_dark;
     } else {
       drawableID = R.drawable.ic_action_sort_muscle;
     }
+
     itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableID, 0);
   }
 }

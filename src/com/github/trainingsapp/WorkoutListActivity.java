@@ -6,10 +6,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
@@ -24,7 +23,7 @@ import com.github.trainingsapp.views.ExerciseListFragment;
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class WorkoutListActivity extends FragmentActivity implements AdapterView.OnItemClickListener, TextView.OnClickListener {
+public class WorkoutListActivity extends FragmentActivity implements ExpandableListView.OnChildClickListener, TextView.OnClickListener {
   private DetailPagerFragment mDetailFragment;
   private ExerciseListFragment mListFragment;
   private EquipmentFragment mEquipmentFragment;
@@ -55,7 +54,8 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
   }
 
   @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+  public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+                              int childPosition, long id) {
     mDetailFragment = new DetailPagerFragment();
     final FragmentManager manager = getSupportFragmentManager();
 
@@ -67,12 +67,15 @@ public class WorkoutListActivity extends FragmentActivity implements AdapterView
     transaction.commit();
 
     /* Detailtext wird gesetzt */
-    final Exercise item = (Exercise) parent.getAdapter().getItem(position);
+    final Exercise item =
+        (Exercise) parent.getExpandableListAdapter().getChild(groupPosition, childPosition);
 
     mDetailFragment.setExercise(item);
 
     /* ActionBar Titel aendern, Knoepfe ausschalten */
     changeActionBar(item.getName(), true);
+
+    return true;
   }
 
   @Override
