@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="quadrizeps">1</integer>
+  <integer name="brust">2</integer>
+  <integer name="ruecken">3</integer>
+  <integer name="schulter">4</integer>
+  <integer name="trizeps">5</integer>
+  <integer name="bizeps">6</integer>
+  <integer name="unterarm">7</integer>
+  <integer name="bauch">8</integer>
+</resources>

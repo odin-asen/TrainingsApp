@@ -14,6 +14,7 @@ import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
 import com.github.trainingsapp.business.container.CategoryContainer;
+import com.github.trainingsapp.business.container.ExerciseMuscleContainer;
 import com.github.trainingsapp.business.container.ExerciseNameContainer;
 import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
@@ -144,11 +145,17 @@ public class ExerciseListFragment extends Fragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
-      final CategoryContainer<String,Exercise> container = new ExerciseNameContainer(exercises);
+      final CategoryContainer<String,Exercise> container = getContainer(exercises);
 
       ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(), container);
       ((ExpandableListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
     }
+  }
+
+  private CategoryContainer<String, Exercise> getContainer(List<Exercise> exercises) {
+    if(mOrder == ORDER_BY_MUSCLE)
+      return new ExerciseMuscleContainer(exercises);
+    else return new ExerciseNameContainer(exercises);
   }
 
   /*        End        */

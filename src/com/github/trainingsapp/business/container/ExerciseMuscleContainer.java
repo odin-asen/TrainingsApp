@@ -21,23 +21,23 @@ public class ExerciseMuscleContainer extends CategoryContainer<String,Exercise> 
    * Das uergebene Array wird nicht veraendert. Es wird in ein anderes Array kopiert und
    * dieses sortiert.
    *
-   * @param elements         Darf nicht leer oder null sein.
+   * @param elements Darf nicht leer oder null sein.
    */
   public ExerciseMuscleContainer(List<Exercise> elements) {
-    super(elements, new MuscleComparator());
+    super(elements, new ExerciseLogicComparator());
   }
 
   @Override
   protected void setCategories(List<Exercise> elements) {
     mCategories = new ArrayList<String>();
-    String firstCharacter = elements.get(0).getName().substring(0,1);
-    mCategories.add(firstCharacter);
+    String firstMuscle = elements.get(0).getPrimaryMuscles().get(0).getName();
+    mCategories.add(firstMuscle);
 
     for (Exercise exercise : elements) {
-      final String currentFirstCharacter = exercise.getName().substring(0,1);
-      if(!firstCharacter.equals(currentFirstCharacter)) {
-        firstCharacter = currentFirstCharacter;
-        mCategories.add(firstCharacter);
+      final String currentFirstMuscle = exercise.getPrimaryMuscles().get(0).getName();
+      if(!firstMuscle.equals(currentFirstMuscle)) {
+        firstMuscle = currentFirstMuscle;
+        mCategories.add(firstMuscle);
       }
     }
   }
@@ -53,40 +53,31 @@ public class ExerciseMuscleContainer extends CategoryContainer<String,Exercise> 
 
     /* Listen fuellen */
     for (Exercise exercise : elements) {
-      final String firstCharacter = exercise.getName().substring(0,1);
-      mAllElements.get(firstCharacter).add(exercise);
+      String firstMuscle = exercise.getPrimaryMuscles().get(0).getName();
+      mAllElements.get(firstMuscle).add(exercise);
     }
   }
 }
 
-class MuscleComparator implements Comparator<Exercise> {
-  private final int RESULT_EQUAL = 0;
-
+class ExerciseLogicComparator implements Comparator<Exercise> {
   @Override
   public int compare(Exercise object, Exercise object1) {
-      /* Vergleiche Primaermuskeln */
-    final int compareResult = compareMuscles(object.getPrimaryMuscles(), object1.getPrimaryMuscles());
-    if(compareResult == RESULT_EQUAL) {
-        /* Vergleiche Sekundaermuskeln */
-      return compareMuscles(object.getSecondaryMuscles(), object1.getSecondaryMuscles());
-    } else {
-      if(compareResult > RESULT_EQUAL)
-        return 1;
-      else return -1;
-    }
+    return compareMuscles(object.getPrimaryMuscles(), object1.getPrimaryMuscles());
   }
 
   private int compareMuscles(List<Muscle> thisList, List<Muscle> thatList) {
-    for (Muscle thisMuscle : thisList) {
-      for (Muscle thatMuscle : thatList) {
-        final int compareResult = thisMuscle.getName().compareTo(thatMuscle.getName());
-        if(compareResult > RESULT_EQUAL)
-          return 1;
-        else if(compareResult < RESULT_EQUAL)
-          return -1;
-      }
+    final int shorterLength;
+    if(thisList.size() > thatList.size())
+      shorterLength = thisList.size();
+    else shorterLength = thatList.size();
+
+    for (int i = 0; i < shorterLength; i++) {
+      final int result = thisList.get(i).getPriority() - thatList.get(i).getPriority();
+      if(result != 0)
+        return result;
     }
 
-    return RESULT_EQUAL;
+    /* Die kuerzer Liste hat eine hoehere Prioritaet */
+    return (thatList.size() - thisList.size());
   }
 }
