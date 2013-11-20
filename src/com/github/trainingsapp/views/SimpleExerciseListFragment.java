@@ -6,15 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.github.R;
 import com.github.trainingsapp.business.Converter;
 import com.github.trainingsapp.business.Exercise;
-import com.github.trainingsapp.business.container.CategoryContainer;
-import com.github.trainingsapp.business.container.ExerciseMuscleContainer;
-import com.github.trainingsapp.business.container.ExerciseNameContainer;
 import com.github.trainingsapp.data.DatabaseAccessor;
 import com.github.trainingsapp.dto.DTOExercise;
 
@@ -24,11 +20,10 @@ import java.util.List;
 /**
  * <p/>
  * Author: Timm Herrmann<br/>
- * Date: 27.06.13
+ * Date: 20.11.13
  */
-public class ExerciseListFragment extends Fragment {
+public class SimpleExerciseListFragment extends Fragment {
   private DatabaseAccessor mDBAccessor;
-  private ExpandableListView.OnChildClickListener mExpandableChildListener;
   private ListView.OnItemClickListener mSimpleItemListener;
 
   public static int ORDER_BY_NOTHING = -1;
@@ -39,7 +34,7 @@ public class ExerciseListFragment extends Fragment {
   /****************/
   /* Constructors */
 
-  public ExerciseListFragment() {
+  public SimpleExerciseListFragment() {
     mOrder = ORDER_BY_NOTHING;
   }
 
@@ -50,22 +45,22 @@ public class ExerciseListFragment extends Fragment {
   /* Methods */
 
   @Override
-  /** Activity muss ExpandableListView.OnChildClickListener implementieren. */
+  /** Activity muss ListView.OnItemClickListener implementieren. */
   public void onAttach(Activity activity) {
     super.onAttach(activity);
 
-    if (activity instanceof ExpandableListView.OnChildClickListener) {
-      mExpandableChildListener = (ExpandableListView.OnChildClickListener) activity;
+    if (activity instanceof ListView.OnItemClickListener) {
+      mSimpleItemListener = (ListView.OnItemClickListener) activity;
     } else {
       throw new ClassCastException(activity.toString()
-          + " must implement ExpandableListView.OnChildClickListener");
+          + " must implement ListView.OnItemClickListener");
     }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    return inflater.inflate(R.layout.exercise_list, container, false);
+    return inflater.inflate(R.layout.simple_exercise_list, container, false);
   }
 
   @Override
@@ -118,8 +113,8 @@ public class ExerciseListFragment extends Fragment {
 
     /* Exerciseliste und OnItemClickListener setzen */
     setExercises(values);
-    ((ExpandableListView) activity.findViewById(R.id.list_view))
-        .setOnChildClickListener(mExpandableChildListener);
+    ((ListView) activity.findViewById(R.id.simple_list_view))
+        .setOnItemClickListener(mSimpleItemListener);
 
     /* ActionBar Titel aendern */
     activity.getActionBar().setTitle(getString(R.string.app_name));
@@ -145,17 +140,9 @@ public class ExerciseListFragment extends Fragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
-      final CategoryContainer<String,Exercise> container = getContainer(exercises);
-
-      ExpandableListAdapter adapter = new ExerciseArrayAdapter(getActivity(), container);
-      ((ExpandableListView) getActivity().findViewById(R.id.list_view)).setAdapter(adapter);
+      ArrayAdapter<Exercise> adapter = new SimpleExerciseArrayAdapter(getActivity(), exercises);
+      ((ListView) getActivity().findViewById(R.id.simple_list_view)).setAdapter(adapter);
     }
-  }
-
-  private CategoryContainer<String, Exercise> getContainer(List<Exercise> exercises) {
-    if(mOrder == ORDER_BY_MUSCLE)
-      return new ExerciseMuscleContainer(exercises);
-    else return new ExerciseNameContainer(exercises);
   }
 
   /*        End        */

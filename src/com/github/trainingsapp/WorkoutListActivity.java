@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
@@ -23,7 +25,8 @@ import com.github.trainingsapp.views.ExerciseListFragment;
  * Author: Timm Herrmann<br/>
  * Date: 23.06.13
  */
-public class WorkoutListActivity extends FragmentActivity implements ExpandableListView.OnChildClickListener, TextView.OnClickListener {
+public class WorkoutListActivity extends FragmentActivity
+    implements ExpandableListView.OnChildClickListener, TextView.OnClickListener, ListView.OnItemClickListener {
   private DetailPagerFragment mDetailFragment;
   private ExerciseListFragment mListFragment;
   private EquipmentFragment mEquipmentFragment;
@@ -51,6 +54,27 @@ public class WorkoutListActivity extends FragmentActivity implements ExpandableL
     mListFragment = new ExerciseListFragment();
     getSupportFragmentManager().beginTransaction().add(
         R.id.main_container, mListFragment).commit();
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    mDetailFragment = new DetailPagerFragment();
+    final FragmentManager manager = getSupportFragmentManager();
+
+    /* Liste mit Detail Ansicht ersetzen */
+    /* addToBackStack erlaubt die Benutzung der Return-Taste */
+    FragmentTransaction transaction = manager.beginTransaction();
+    transaction.replace(R.id.main_container, mDetailFragment);
+    transaction.addToBackStack(null);
+    transaction.commit();
+
+    /* Detailtext wird gesetzt */
+    final Exercise item = (Exercise) parent.getAdapter().getItem(position);
+
+    mDetailFragment.setExercise(item);
+
+    /* ActionBar Titel aendern, Knoepfe ausschalten */
+    changeActionBar(item.getName(), true);
   }
 
   @Override
