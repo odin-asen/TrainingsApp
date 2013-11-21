@@ -14,9 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
-import com.github.trainingsapp.views.DetailPagerFragment;
-import com.github.trainingsapp.views.EquipmentFragment;
-import com.github.trainingsapp.views.ExerciseListFragment;
+import com.github.trainingsapp.views.*;
 
 /**
  * Diese Klasse startet das Programm. Eine Liste der möglichen Trainingsuebungen
@@ -51,7 +49,7 @@ public class WorkoutListActivity extends FragmentActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    mListFragment = new ExerciseListFragment();
+    mListFragment = new ExpandableListFragment();
     getSupportFragmentManager().beginTransaction().add(
         R.id.main_container, mListFragment).commit();
   }
@@ -144,12 +142,16 @@ public class WorkoutListActivity extends FragmentActivity
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_sort_muscle:
-        if(mListFragment.isVisible())
-          mListFragment.setOrder(ExerciseListFragment.ORDER_BY_MUSCLE);
+        if(mListFragment.isVisible() &&
+           !(mListFragment instanceof ExpandableListFragment)) {
+          setListFragment(new ExpandableListFragment());
+        }
         break;
       case R.id.action_sort_name:
-        if(mListFragment.isVisible())
-          mListFragment.setOrder(ExerciseListFragment.ORDER_BY_NAME);
+        if(mListFragment.isVisible() &&
+           !(mListFragment instanceof SimpleListFragment)) {
+          setListFragment(new SimpleListFragment());
+        }
         break;
       default:
         break;
@@ -164,6 +166,11 @@ public class WorkoutListActivity extends FragmentActivity
   /*******************/
   /* Private Methods */
 
+  private void setListFragment(ExerciseListFragment fragment) {
+    mListFragment = fragment;
+    getSupportFragmentManager().beginTransaction().replace(
+        R.id.main_container, mListFragment).commit();
+  }
   /**
    *  Aendert den Titel der ActionBar, wenn der Parameter nicht null ist
    *  und setzt die Knoepfe je nach View.
