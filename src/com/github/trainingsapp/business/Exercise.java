@@ -16,7 +16,7 @@ public class Exercise {
   /** Ressourcen ID der Anatomiebilddatei */
   private int mAnatomyRID;
   /** Ressourcen ID der Animations XML Datei */
-  private int mAnimationRID;
+  private List<Integer> mAnimationRIDs;
 
   private Difficulty mDifficulty;
   private List<Equipment> mEquipmentList;
@@ -28,13 +28,13 @@ public class Exercise {
   /****************/
   /* Constructors */
 
-  public Exercise(String name, String text, int anatomyRID, int animationRID,
+  public Exercise(String name, String text, int anatomyRID, List<Integer> animationRIDs,
                   Difficulty difficulty, List<Equipment> equipments, List<Muscle> primaryMuscles,
                   List<Muscle> secondaryMuscles) {
     mName = name;
     mText = text;
     mAnatomyRID = anatomyRID;
-    mAnimationRID = animationRID;
+    mAnimationRIDs = new ArrayList<Integer>(animationRIDs);
     mDifficulty = difficulty;
     mEquipmentList = new ArrayList<Equipment>(equipments);
     mPrimaryMuscles = new ArrayList<Muscle>(primaryMuscles);
@@ -78,8 +78,8 @@ public class Exercise {
     return mAnatomyRID;
   }
 
-  public int getAnimationRID() {
-    return mAnimationRID;
+  public List<Integer> getAnimationRID() {
+    return mAnimationRIDs;
   }
 
   public Difficulty getDifficulty() {

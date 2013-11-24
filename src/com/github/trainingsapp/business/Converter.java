@@ -22,6 +22,8 @@ public class Converter {
   private static final String TYPE_INTEGER = "integer";
   private static final String PKG_NAME = "com.github";
   private static final String PREFIX_DESCR = "description_";
+  private static final String PREFIX_ANATO = "anatomy_";
+  private static final String PREFIX_ANIMA = "animation_";
 
   private Resources mRes;
 
@@ -40,12 +42,11 @@ public class Converter {
 
   public Exercise fromDTO(DTOExercise dto) {
     int nameRID = mRes.getIdentifier(dto.name, TYPE_STRING, PKG_NAME);
-    int textRID = mRes.getIdentifier(PREFIX_DESCR +dto.name, TYPE_STRING, PKG_NAME);
-    int anatomyRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
-    int animationRID = mRes.getIdentifier(dto.name, TYPE_DRAWABLE, PKG_NAME);
+    int textRID = mRes.getIdentifier(PREFIX_DESCR + dto.name, TYPE_STRING, PKG_NAME);
+    int anatomyRID = mRes.getIdentifier(PREFIX_ANATO + dto.name, TYPE_DRAWABLE, PKG_NAME);
     int difficultyRID = mRes.getIdentifier(dto.difficulty, TYPE_STRING, PKG_NAME);
     return new Exercise(mRes.getString(nameRID), mRes.getString(textRID),
-        anatomyRID, animationRID, new Difficulty(mRes.getString(difficultyRID)),
+        anatomyRID, getAnimationRIDs(PREFIX_ANIMA + dto.name), new Difficulty(mRes.getString(difficultyRID)),
         fromEquipmentDTO(dto.equipment), fromMuscleDTO(dto.primaryMuscles),
         fromMuscleDTO(dto.secondaryMuscles));
   }
@@ -108,6 +109,20 @@ public class Converter {
       return null;
     }
   }
+
+  private List<Integer> getAnimationRIDs(String name) {
+    final List<Integer> idList = new ArrayList<Integer>(1);
+    final int NO_RESOURCE = 0;
+
+    int resourceID = mRes.getIdentifier(name+"_"+1, TYPE_DRAWABLE, PKG_NAME);
+    for (int index = 2; resourceID != NO_RESOURCE; index++) {
+      idList.add(resourceID);
+      resourceID = mRes.getIdentifier(name+"_"+index, TYPE_DRAWABLE, PKG_NAME);
+    }
+
+    return idList;
+  }
+
   /*       End       */
   /*******************/
 

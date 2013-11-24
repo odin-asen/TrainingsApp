@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.R;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailPagerFragment extends Fragment {
-  private static final int PAGE_COUNT = 3;
+  private static final int MAX_PAGE_COUNT = 3;
 
   private DetailPagerAdapter mDetailPagerAdapter;
   private Exercise mExercise;
@@ -38,7 +40,7 @@ public class DetailPagerFragment extends Fragment {
 
     /* Initialisierung des ViewPager-Objektes */
     ViewPager viewPager = (ViewPager) mRootView.findViewById(R.id.detail_pager);
-    viewPager.setOffscreenPageLimit(PAGE_COUNT);
+    viewPager.setOffscreenPageLimit(MAX_PAGE_COUNT);
     viewPager.setAdapter(mDetailPagerAdapter);
 
     setEquipmentTextViews();
@@ -98,11 +100,15 @@ public class DetailPagerFragment extends Fragment {
     if(mExercise == null)
       return new ArrayList<Fragment>(0);
 
-    List<Fragment> fList = new ArrayList<Fragment>(3);
+    int animationCount = mExercise.getAnimationRID().size();
+    List<Fragment> fList = new ArrayList<Fragment>(animationCount+2);
 
     fList.add(DetailImageFragment.newInstance(mExercise.getAnatomyRID()));
     fList.add(DescriptionFragment.newInstance(mExercise.getText()));
-    fList.add(AnimationFragment.newInstance(mExercise.getAnimationRID()));
+
+    for (int index = 0; index < animationCount; index++) {
+      fList.add(AnimationFragment.newInstance(mExercise.getAnimationRID().get(index)));
+    }
 
     return fList;
   }
