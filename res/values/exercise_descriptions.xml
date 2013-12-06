@@ -1,9 +1,96 @@
 <resources>
-    <string name="description_kniebeuge">Knie beugen. Knie strecken.</string>
-    <string name="description_liegestuetze_brust">Ellenbogen beugen. Ellenbogen strecken!</string>
-    <string name="description_klimmzug_breit_1">Festhalten. Arm anwinkeln, bblablalba.</string>
-    <string name="description_liegestuetze_handstand">Hantel nehmen. Arm beugen, und blablabla.</string>
-    <string name="description_extensions">Hoch ziehen. Runter lassen. Und so weiter...</string>
-    <string name="description_chin_ups">EUROTRAINING,EUROTRAINING,EUROTRAINING,EUROTRAINING,EUROTRAINING!</string>
-    <string name="description_knieheben_haengend">EUROTRAINING,EUROTRAINING,EUROTRAINING,EUROTRAINING,EUROTRAINING!</string>
+    <string name="description_squats">Ausgangsposition: Aufrechter Stand; Beine hüft- bis schulterbreit auseinander, Zehen leicht nach aussen gedreht; leichte Beugung in den Knien
+        Bei der Ausführung darauf achten, dass der Rücken gerade bleibt die ganze Bewegung lang. Erreichen die Oberschenkel eine paralle Position zum Boden, wird die Bewegung umgekehrt in den Stand, jedoch werden die Knie nie durchgestreckt. Man stelle sich vor, man will sich auf einen knietiefen Hocker setzen.
+    </string>
+
+    <string name="description_pushups">Ausgangsposition: Hände auf Höhe des Schultergürtels; Schulterbreit auseinander; Kopf und Füsse bilden eine gerade Linie; Nacken nicht überstrecken (Blick ca. 30cm über der Handposition)
+        Bei der Ausführung wird nicht die Nase zum Boden gebracht, sondern die Brust. Der Nacken wird nicht bewegt. Der gesamt Körper senkt sich in einer Bewegung zum Boden. Hüfte sollte leicht nach oben gehoben werden und niemals durchhängen, da sonst eine unnötige Belastung auf die Bandscheiben im unteren Rücken wirken.
+    </string>
+
+    <string name="description_handstand_pushups">Ausgangsposition: Hände schulterbreit auseinander auf dem Boden; Handstand-Position; Beine an der Wand
+        Gesamter Körper bildet eine Linie und wird nach unten gelassen, bis der Kopf den Boden berührt (nach Bedarf ein Handtuch oder kleines Kissen auf den Boden legen für den Kopf). Ellebogen zeigen nach aussen vom Körper weg.
+    </string>
+
+    <string name="description_wide_grip_pullups">Ausgangsposition: Hände greifen die Stange mit Griff von oben; etwas weiter als Schulterbreite; Beine nach Bedarf anwinkeln oder ausstrecken
+        Beim Zug nach oben, wird versucht den oberen Teil der Brust bis an die Stange zu ziehen. Die Ellebogen führen die Bewegung und werden nach unten-hinten gebracht, so dass die Schulterblätter zusammen geführt sind am Ende der Bewegung. Es sollte ein leichtes Hohlkreuz gemacht werden, und der Brustkorb zeigt zur Stange. Die Ellebogen werden niemals vor die Brust gebracht während dem Zug und die Brust niemals eingesackt (Verlagerung der Muskelspannung auf Arme).</string>
+
+    <string name="description_extensions_triceps">Ausgangsposition: Hände hüftbreit auf das Objekt; Ellebogen zeigen zum Boden; Beine vom Objekt ca. einen Meter
+        Bei der Ausführung mit dem Kopft unter das Objekt "tauchen" und mit der Kraft des Trizeps den Kopf wieder hervorholen. Ellebogen während der Ausführung nicht nach aussen driften lassen, sie sollen immer zum Boden zeigen.
+    </string>
+
+    <string name="description_chinups">Ausgangspostion: Griff and die Stange von unten; enger als hüftbreit greifen; nach Bedarf Unterschenkel anwinkeln oder gestreckt lassen
+        Durch Beugung der Arme den Oberkörper hochziehen bis die Stange under dem Kinn ist bzw. auf Höhe der oberen Brust.
+    </string>
+
+    <string name="description_kneelifts">Ausgangspostion: Griff and die Stange von unten; enger als hüftbreit greifen; nach Bedarf Unterschenkel anwinkeln oder gestreckt lassen
+        Durch Beugung der Arme den Oberkörper hochziehen bis die Stange under dem Kinn ist bzw. auf Höhe der oberen Brust.
+    </string>
+
+    <string name="description_shoulders">Ausgangsposition: Hände ca. schulterbreit auf dem Boden/Objekt platzieren; Beine vom Boden heben; Balance halten auf den Händen und Knie angewinkelt zur Brust bring und halten
+        Ausführung: Ellbogen beugen wie bei Liegestützen und den Kopf in einer kontrollieren Bewegung zum Boden bringen. Anschließend die Bewegung umkehren und Arme durchstrecken.
+    </string>
+
+    <string name="description_close_grip_pullups">Ausgangsposition: Hände greifen die Stange mit Griff von oben; enger als Schulterbreit; Beine nach Bedarf anwinkeln oder ausstrecken
+        Beim Zug nach oben, wird versucht den oberen Teil der Brust bis an die Stange zu ziehen. Die Ellbogen werden versucht am Körper vorbei geführt über die Körperlinie. Es sollte ein leichtes Hohlkreuz gemacht werden, und der Brustkorb zeigt zur Stange.
+    </string>
+
+    <string name="description_neck_pullups">Ausgangsposition: Hände greifen die Stange mit Griff von oben; etwas weiter als Schulterbreit; Beine nach Bedarf anwinkeln oder ausstrecken
+        Beim Zug nach oben, wird versucht die Stange zum Nacken zu bringen. Die Ellebogen führen die Bewegung und werden nach unten-hinten gebracht, so dass die Schulterblätter zusammen geführt sind am Ende der Bewegung. Es sollte ein leichtes Hohlkreuz gemacht werden. Die Ellebogen werden niemals vor die Brust gebracht während dem Zug und die Brust niemals eingesackt (Verlagerung der Muskelspannung auf Arme).
+    </string>
+
+    <string name="description_overhead_rows">Ausgangsposition: Hände greifen die Stange mit Griff von unten ca. Schulterbreit; Beine werden nach oben gehoben vor die Stange richtung Decke und der Rücken zeugt zum Boden (L-Position)
+        Mit der Kraft des Rückens werden die Ellbogen nach hinten gezogen und der Bauchnabel zur Stange gebracht. Danach wird die Bewegung kontrolliert umgekehrt und in die hängende L-Position gebracht.
+    </string>
+
+    <string name="description_overhead_pulls">Ausgangsposition: Hände greifen die Stange mit Griff von oben ca. Schulterbreit; Beine werden zwischen die Stange und Oberkörper gebracht, mit dem Rücken zum Boden zeigend.
+        Mit der Kraft des Rückens werden die Ellbogen nach hinten gezogen und der Beinbizeps zur Stange gebracht. Danach wird die Bewegung kontrolliert umgekehrt und in die hängende L-Position gebracht.
+    </string>
+
+    <string name="description_boxjumpsquats">Ausgangsposition: Positionieren Sie sich ca. 50 cm vor dem Objekt.
+        Srpingen Sie auf das Objekt (Abgefangen wird das Körpergewicht mit den Fussballen). Nach der Landung auf dem Objekt wird eine Kniebeuge fließend angehängt an die Bewegung. Wurde die Kniebeuge vollendet, wird die Bewegung umgekehrt und ein Rückwärtssprung wird ausgeführt. Am Boden angekommen, endet dieser Bewegungsablauf in der Hocken.
+    </string>
+
+    <string name="description_bicepspulls">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefasst (Handflächen zeigen zueinander)
+        Mit Hilfe der Bizeps wird der Körper angehoben und die Ellbogen gebeugt, jedoch wird der Körper nicht mit dem Ellbogen gezogen, die Unterarme führen die Bewegung. Oben angekommen wird die Bewegung kontrolliert umgekehrt unde der Körper langsam runtergebracht.
+    </string>
+
+    <string name="description_pistolsquats">Ausgangsposition: Schulterbreiter Stand
+        Ein Bein wird vom Boden angehoben und der Körperschwerpunkt auf das andere Bein verlagert. Anschließend wird das mit dem Gewicht belastete Bein gebeugt und das freie Bein im verlauf der Kniebeuge nach vorne gestreckt und vom Boden ferhgehalten. Sobald das Gesäß in der Näher der Ferse des gebeugten Beines nah kommt, wird die Bewegung umgekehrt und mit der Kraft der Oberschenkelmuskulatur der Körper nach oben gehoben.
+    </string>
+
+    <string name="description_legflutters">Ausgangsposition: Hände auf das Objekt platzieren und die Beine im rechten Winkel nach Vorne strecken.
+        Bei der Ausführung werden die Beine wie eine Schere abwechselnd nach oben und unten geflattert, ohne die Knie zu beugen.
+    </string>
+
+    <string name="description_muscleups">Ausgangsposition: </string>
+
+    <string name="description_diamond_pushups">Ausgangsposition: Hände auf dem Boden oder Objekt in einer Diamantenform zusammen bringen; Beine nach Bedarf schulterweit platzieren
+        Wie bei der normalen Liegestütze werden die Ellbogen gebeugt und die Brust zum Boden geführt. Sobald der Solar Plexus die Handrückenseiten berührt, wird die Bewegung umgekehrt und mit der Kraft der Triceps und Brust wieder in die Ausgangsposition gebracht.
+    </string>
+
+    <string name="description_close_grip_pushups">Ausgangsposition: Hände auf dem Boden oder Objekt enger als Schulterweit in Liegestütz-Position
+        Wie bei der normalen Liegestütze werden die Ellbogen gebeugt und die Brust zum Boden geführt. Sobald die Brust den Boden berührt, wird die Bewegung umgekehrt und mit der Kraft der Triceps und Brust wieder in die Ausgangsposition gebracht.
+    </string>
+
+    <string name="description_straight_bar_dips">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_angled_bar_dips">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_alternate_grip_pullups">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_overhead_triceps">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_levers">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_bicepscurls">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
+    <string name="description_single_leg_squats">Ausgangsposition: Die Monkey-Bar wird mit einem neutralen Griff gefast (Handflächen zeigen zueinander)
+    </string>
+
 </resources>

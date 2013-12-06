@@ -119,7 +119,7 @@ public class ExerciseArrayAdapter extends BaseExpandableListAdapter {
     itemTextView.setText(exercise.getName());
 
     int drawableID;
-    if (mContext.getString(R.string.amateur).equals(exercise.getDifficulty().getName())) {
+    if (mContext.getString(R.string.leicht).equals(exercise.getDifficulty().getName())) {
       drawableID = R.drawable.ic_action_n_dark;
     } else {
       drawableID = R.drawable.ic_action_sort_muscle;

@@ -6,33 +6,53 @@
   <string name="label_equipment"><u><font size="30">Geräte</font></u></string>
 
   <!--Uebungsnamen-->
-  <string name="kniebeuge">Kniebeuge</string>
-  <string name="liegestuetze_brust">Liegestütze</string>
-  <string name="klimmzug_breit_1">Klimmzug (breit)</string>
-  <string name="liegestuetze_handstand">Handstandliegestütze</string>
-  <string name="extensions">Extensions</string>
-  <string name="chin_ups">Chin-Ups</string>
-  <string name="knieheben_haengend">Knieheben (hängend)</string>
+  <string name="legflutters">Legflutters</string>
+  <string name="bicepspulls">Bicepspulls</string>
+  <string name="bicepscurls">Bicepscurls</string>
+  <string name="boxjumpsquats">Box Jump Squats</string>
+  <string name="chinups">Chinups</string>
+  <string name="straight_bar_dips">Dips (gerade)</string>
+  <string name="angled_bar_dips">Dips (gekrümmt)</string>
+  <string name="extensions_triceps">Extensions (Trizeps)</string>
+  <string name="alternate_grip_pullups">Klimmzüge (wechselnd)</string>
+  <string name="single_leg_squats">Kniebeugen (einbeinig)</string>
+  <string name="kneelifts">Knieheben</string>
+  <string name="levers">Levers</string>
+  <string name="diamond_pushups">Liegestützen (diamant)</string>
+  <string name="close_grip_pushups">Liegestützen (eng)</string>
+  <string name="muscleups">Muscleups</string>
+  <string name="pistolsquats">Pistolsquats</string>
+  <string name="overhead_pulls">Overhead Pulls</string>
+  <string name="neck_pullups">Klimmzüge (Nacken)</string>
+  <string name="close_grip_pullups">Klimmzüge (eng)</string>
+  <string name="wide_grip_pullups">Klimmzüge (breiter Griff)</string>
+  <string name="pushups">Liegestützen</string>
+  <string name="overhead_rows">Rudern (Überkopf)</string>
+  <string name="shoulders">Schultern</string>
+  <string name="squats">Squats</string>
+  <string name="overhead_triceps">Überkopf Trizeps</string>
+  <string name="handstand_pushups">Handstand Pushups</string>
 
   <!--Schwierigkeitsstufen-->
-  <string name="amateur">Amateur</string>
-  <string name="fortgeschritten">Fortgeschritten</string>
+  <string name="leicht">Leicht</string>
+  <string name="schwierig">Schwierig</string>
 
   <!--Geraete-->
   <string name="nichts">nichts</string>
-  <string name="stange">Stange</string>
-  <string name="kurzhantel">Kurzhantel</string>
+  <string name="monkeybar_geneigt">Monkeybar (geneigt)</string>
+  <string name="balancestamm">Balancestamm</string>
   <string name="reck">Reck</string>
-  <string name="klotz">Klotz</string>
+  <string name="rutsche">Rutsche</string>
   <string name="wand">Wand</string>
+  <string name="bank">Wand</string>
+  <string name="stange">Wand</string>
 
   <!--Muskeln-->
   <string name="bizeps">Bizeps</string>
   <string name="trizeps">Trizeps</string>
-  <string name="quadrizeps">Quadrizeps</string>
+  <string name="beine">Beine</string>
   <string name="brust">Brust</string>
-  <string name="unterarm">Unterarm</string>
-  <string name="ruecken">Ruecken</string>
+  <string name="ruecken">Rücken</string>
   <string name="bauch">Bauch</string>
   <string name="schulter">Schulter</string>
 

@@ -45,7 +45,7 @@ public class SimpleExerciseArrayAdapter extends ArrayAdapter<Exercise> {
   private void fillTextView(TextView itemTextView, Exercise exercise) {
     itemTextView.setText(exercise.getName());
     int drawableID;
-    if (mContext.getString(R.string.amateur).equals(exercise.getDifficulty().getName())) {
+    if (mContext.getString(R.string.leicht).equals(exercise.getDifficulty().getName())) {
       drawableID = R.drawable.ic_action_n_dark;
     } else {
       drawableID = R.drawable.ic_action_sort_muscle;

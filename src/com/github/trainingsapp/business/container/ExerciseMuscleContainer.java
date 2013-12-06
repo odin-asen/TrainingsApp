@@ -67,7 +67,7 @@ class ExerciseLogicComparator implements Comparator<Exercise> {
 
   private int compareMuscles(List<Muscle> thisList, List<Muscle> thatList) {
     final int shorterLength;
-    if(thisList.size() > thatList.size())
+    if(thisList.size() < thatList.size())
       shorterLength = thisList.size();
     else shorterLength = thatList.size();
 
