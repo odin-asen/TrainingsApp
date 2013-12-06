@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/kniebeuge_einbeinig" android:oneshot="false" >
+    <item android:drawable="@drawable/single_leg_squats1" android:duration="50" />
+    <item android:drawable="@drawable/single_leg_squats2" android:duration="50" />
+    <item android:drawable="@drawable/single_leg_squats3" android:duration="50" />
+    <item android:drawable="@drawable/single_leg_squats4" android:duration="50" />
+</animation-list>

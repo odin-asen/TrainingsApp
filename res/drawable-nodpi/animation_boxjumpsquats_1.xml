@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/boxjumpsquat" android:oneshot="false" >
+    <item android:drawable="@drawable/boxjumpsquats1" android:duration="50" />
+    <item android:drawable="@drawable/boxjumpsquats2" android:duration="50" />
+    <item android:drawable="@drawable/boxjumpsquats3" android:duration="50" />
+    <item android:drawable="@drawable/boxjumpsquats4" android:duration="50" />
+    <item android:drawable="@drawable/boxjumpsquats5" android:duration="50" />
+    <item android:drawable="@drawable/boxjumpsquats6" android:duration="50" />
+</animation-list>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/squat" android:oneshot="false" >
+    <item android:drawable="@drawable/squats1" android:duration="50" />
+    <item android:drawable="@drawable/squats2" android:duration="50" />
+    <item android:drawable="@drawable/squats3" android:duration="50" />
+    <item android:drawable="@drawable/squats4" android:duration="50" />
+</animation-list>

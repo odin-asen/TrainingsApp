@@ -14,7 +14,11 @@
 /libs
 
 # Ignore image, sound and other files.
-/res/drawable*
+*.jp*g
+*.png
+*.wav
+*.ogg
+*.mp3
 /assets
 
 #Ignore temporary and library files

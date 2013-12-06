@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/klimmzug_wechselnd" android:oneshot="false" >
+    <item android:drawable="@drawable/alternate_grip_pullups1" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups2" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups3" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups4" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups5" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups6" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups7" android:duration="50" />
+    <item android:drawable="@drawable/alternate_grip_pullups8" android:duration="50" />
+</animation-list>

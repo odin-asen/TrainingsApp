@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/liegestuetze_eng" android:oneshot="false" >
+    <item android:drawable="@drawable/close_grip_pushups1" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pushups2" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pushups3" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pushups4" android:duration="50" />
+</animation-list>

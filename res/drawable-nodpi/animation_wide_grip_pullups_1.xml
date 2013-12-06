@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/pullups_weit" android:oneshot="false" >
+    <item android:drawable="@drawable/close_grip_pullups1" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pullups2" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pullups3" android:duration="50" />
+    <item android:drawable="@drawable/close_grip_pullups4" android:duration="50" />
+</animation-list>

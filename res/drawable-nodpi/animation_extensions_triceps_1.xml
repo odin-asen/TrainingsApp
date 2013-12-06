@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/extensions_trizeps" android:oneshot="false" >
+    <item android:drawable="@drawable/extensions_triceps1" android:duration="50" />
+    <item android:drawable="@drawable/extensions_triceps2" android:duration="50" />
+    <item android:drawable="@drawable/extensions_triceps3" android:duration="50" />
+    <item android:drawable="@drawable/extensions_triceps4" android:duration="50" />
+</animation-list>
