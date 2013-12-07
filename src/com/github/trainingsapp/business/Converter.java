@@ -66,8 +66,7 @@ public class Converter {
     for (String value : dtoArray) {
       int equipmentRID = mRes.getIdentifier(value, TYPE_STRING, PKG_NAME);
       int equipmentImageID = mRes.getIdentifier(value, TYPE_DRAWABLE, PKG_NAME);
-      final Drawable drawable = getSafeDrawable(equipmentImageID);
-      modelList.add(new Equipment(mRes.getString(equipmentRID), drawable));
+      modelList.add(new Equipment(mRes.getString(equipmentRID), equipmentImageID));
     }
     return modelList;
   }

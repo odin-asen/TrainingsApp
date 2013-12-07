@@ -1,6 +1,5 @@
 package com.github.trainingsapp;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -104,7 +103,7 @@ public class WorkoutListActivity extends FragmentActivity
   public void onClick(View v) {
     mEquipmentFragment = new EquipmentFragment();
     TextView clickedView = (TextView) v;
-    Drawable drawable = (Drawable) clickedView.getTag();
+    Integer drawableID = (Integer) clickedView.getTag();
 
     final FragmentManager manager = getSupportFragmentManager();
 
@@ -116,7 +115,7 @@ public class WorkoutListActivity extends FragmentActivity
     transaction.addToBackStack(null);
     transaction.commit();
 
-    mEquipmentFragment.setImage(drawable);
+    mEquipmentFragment.setImage(getResources().getDrawable(drawableID));
 
     /* ActionBar Titel aendern, Knoepfe ausschalten */
     changeActionBar(clickedView.getText(), true);

@@ -4,7 +4,7 @@
             android:id="@+id/action_sort_name"
             android:orderInCategory="100"
             android:showAsAction="always"
-            android:icon="@drawable/ic_action_n_dark"
+            android:icon="@drawable/ic_action_sort_down_alpha"
             android:title="Settings"/>
 
     <item

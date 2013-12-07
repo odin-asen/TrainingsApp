@@ -1,7 +1,5 @@
 package com.github.trainingsapp.business;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Diese Klasse repraesentiert ein Geraet, dass für eine Uebung verwendet wird.
  * <p/>
@@ -10,18 +8,18 @@ import android.graphics.drawable.Drawable;
  */
 public class Equipment {
   private String mName;
-  private Drawable mImage;
+  private int mImage;
 
-  Equipment(String name, Drawable image) {
+  Equipment(String name, int imageID) {
     mName = name;
-    mImage = image;
+    mImage = imageID;
   }
 
   public String getName() {
     return mName;
   }
 
-  public Drawable getImage() {
+  public int getImageID() {
     return mImage;
   }
 

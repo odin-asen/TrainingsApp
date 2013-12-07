@@ -138,7 +138,7 @@ public class DetailPagerFragment extends Fragment {
     /* TextView wird klickbar gemacht */
     if(!noEquipment.equals(equipmentText)) {
       textView.setOnClickListener(mOnClickListener);
-      textView.setTag(equipment.getImage());
+      textView.setTag(equipment.getImageID());
     }
 
     return textView;
