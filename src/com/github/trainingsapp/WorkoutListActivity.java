@@ -116,7 +116,7 @@ public class WorkoutListActivity extends FragmentActivity
       transaction.addToBackStack(null);
       transaction.commit();
 
-      mEquipmentFragment.setImage(getResources().getDrawable(drawableID));
+      mEquipmentFragment.setImage(drawableID);
 
       /* ActionBar Titel aendern, Knoepfe ausschalten */
       changeActionBar(clickedView.getText(), true);

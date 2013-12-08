@@ -7,6 +7,9 @@
 # Ignore IntelliJ files
 /.idea
 *.iml
+local.properties
+ant.properties
+build.xml
 
 # Ignore generated, binary and library files.
 /gen
