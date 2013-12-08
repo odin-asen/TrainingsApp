@@ -105,20 +105,22 @@ public class WorkoutListActivity extends FragmentActivity
     TextView clickedView = (TextView) v;
     Integer drawableID = (Integer) clickedView.getTag();
 
-    final FragmentManager manager = getSupportFragmentManager();
+    if(drawableID != 0) {
+      final FragmentManager manager = getSupportFragmentManager();
 
-    /* DetailFragment verstecken und das Unterlayout mit */
-    /* EquipmentFragment Objekt besetzen. */
-    FragmentTransaction transaction = manager.beginTransaction();
-    transaction.hide(mDetailFragment);
-    transaction.replace(R.id.sub_container, mEquipmentFragment);
-    transaction.addToBackStack(null);
-    transaction.commit();
+      /* DetailFragment verstecken und das Unterlayout mit */
+      /* EquipmentFragment Objekt besetzen. */
+      FragmentTransaction transaction = manager.beginTransaction();
+      transaction.hide(mDetailFragment);
+      transaction.replace(R.id.sub_container, mEquipmentFragment);
+      transaction.addToBackStack(null);
+      transaction.commit();
 
-    mEquipmentFragment.setImage(getResources().getDrawable(drawableID));
+      mEquipmentFragment.setImage(getResources().getDrawable(drawableID));
 
-    /* ActionBar Titel aendern, Knoepfe ausschalten */
-    changeActionBar(clickedView.getText(), true);
+      /* ActionBar Titel aendern, Knoepfe ausschalten */
+      changeActionBar(clickedView.getText(), true);
+    }
   }
 
   @Override
