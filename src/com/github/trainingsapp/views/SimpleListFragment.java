@@ -7,6 +7,8 @@ import android.widget.ListView;
 import com.github.R;
 import com.github.trainingsapp.business.Exercise;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -64,6 +66,7 @@ public class SimpleListFragment extends ExerciseListFragment {
   /** Setzt Exercise-Objekte in die Liste. */
   public void setExercises(List<Exercise> exercises) {
     if(getActivity() != null) {
+      nameSortExercises(exercises);
       ArrayAdapter<Exercise> adapter = new SimpleExerciseArrayAdapter(getActivity(), exercises);
       ((ListView) getActivity().findViewById(R.id.simple_list_view)).setAdapter(adapter);
     }
@@ -71,4 +74,13 @@ public class SimpleListFragment extends ExerciseListFragment {
 
   /*        End        */
   /*********************/
+
+  private void nameSortExercises(List<Exercise> exercises) {
+    Collections.sort(exercises, new Comparator<Exercise>() {
+      @Override
+      public int compare(Exercise thisExercise, Exercise thatExercise) {
+        return thisExercise.getName().compareTo(thatExercise.getName());
+      }
+    });
+  }
 }

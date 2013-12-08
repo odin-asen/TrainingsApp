@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.R;
@@ -118,30 +119,29 @@ public class DetailPagerFragment extends Fragment {
     final LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.equipment_text_layout);
 
     for (Equipment equipment : mExercise.getEquipmentList()) {
-      final TextView view = createEquipmentTextView(equipment);
+      final Button view = createEquipmentButton(equipment);
       layout.addView(view);
     }
 
     layout.invalidate();
   }
 
-  private TextView createEquipmentTextView(Equipment equipment) {
+  private Button createEquipmentButton(Equipment equipment) {
     final String equipmentText = equipment.getName();
     final String noEquipment = getString(R.string.nichts);
-    final TextView textView = new TextView(getActivity());
+    final Button button = new Button(getActivity());
 
-    textView.setText(equipmentText);
-    textView.setLayoutParams(new ViewGroup.LayoutParams(
+    button.setText(equipmentText);
+    button.setLayoutParams(new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-    textView.setPadding(5,0,5,5);
 
-    /* TextView wird klickbar gemacht */
+    /* Button wird klickbar gemacht */
     if(!noEquipment.equals(equipmentText)) {
-      textView.setOnClickListener(mOnClickListener);
-      textView.setTag(equipment.getImageID());
+      button.setOnClickListener(mOnClickListener);
+      button.setTag(equipment.getImageID());
     }
 
-    return textView;
+    return button;
   }
 
   /*       End       */
