@@ -120,9 +120,14 @@ public class DetailPagerFragment extends Fragment {
 
     for (Equipment equipment : mExercise.getEquipmentList()) {
       final Button view = createEquipmentButton(equipment);
-      layout.addView(view);
+      if(view != null)
+        layout.addView(view);
     }
 
+    if(layout.getChildCount() == 0) {
+      layout.setVisibility(View.INVISIBLE);
+      mRootView.findViewById(R.id.label_equipment).setVisibility(View.INVISIBLE);
+    }
     layout.invalidate();
   }
 
@@ -139,7 +144,7 @@ public class DetailPagerFragment extends Fragment {
     if(!noEquipment.equals(equipmentText)) {
       button.setOnClickListener(mOnClickListener);
       button.setTag(equipment.getImageID());
-    }
+    } else return null;
 
     return button;
   }
