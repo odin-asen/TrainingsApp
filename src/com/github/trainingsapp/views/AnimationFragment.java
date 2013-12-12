@@ -1,8 +1,8 @@
 package com.github.trainingsapp.views;
 
 import android.graphics.drawable.AnimationDrawable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +62,10 @@ public class AnimationFragment extends Fragment {
     if(mImageView == null)
       mImageView = (ImageView) mRootView.findViewById(R.id.animation_view);
 
-    mImageView.setBackgroundResource(getArguments().getInt(KEY_ANIMATION));
+    mImageView.setImageResource(getArguments().getInt(KEY_ANIMATION));
 
     /* Animation starten */
-    mAnimation = (AnimationDrawable) mImageView.getBackground();
+    mAnimation = (AnimationDrawable) mImageView.getDrawable();
 
     if(mAnimation != null)
       mAnimation.start();
