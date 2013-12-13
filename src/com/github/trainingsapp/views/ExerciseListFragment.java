@@ -3,6 +3,7 @@ package com.github.trainingsapp.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +68,6 @@ public abstract class ExerciseListFragment extends Fragment {
     super.onPause();
   }
 
-  /*   End   */
-  /***********/
-
-  /*******************/
-  /* Private Methods */
-
   /**
    * Oeffnet die Datenbank und laedt die Übungsliste (ruft setExercise).
    * super sollte beim Ueberschreiben aufgerufen werden.
@@ -85,12 +80,40 @@ public abstract class ExerciseListFragment extends Fragment {
     Converter converter = new Converter(activity);
     final List<DTOExercise> dtos = getAllExercises();
     final List<Exercise> values = new ArrayList<Exercise>(dtos.size());
-    for (DTOExercise dto : dtos) {
-      values.add(converter.fromDTO(dto));
-    }
+
+    convertExercises(converter, dtos, values);
 
     /* Exerciseliste und OnItemClickListener setzen */
     setExercises(values);
+  }
+
+  /*   End   */
+  /***********/
+
+  /*******************/
+  /* Private Methods */
+
+  /** Gibt null zurueck, wenn alle Ressourcen der Uebungen vollstaendig sind. */
+  private String convertExercises(Converter converter, List<DTOExercise> dtos, List<Exercise> values) {
+    final StringBuilder incompleteExercises = new StringBuilder(256);
+    incompleteExercises.append("Folgende Uebungen (Referenznamen angegeben) sind unvollständig:\n");
+    boolean completeExerciseResources = true;
+
+    for (DTOExercise dto : dtos) {
+      final String missingResources = converter.checkResourcesForExercise(dto);
+      completeExerciseResources = completeExerciseResources && missingResources.isEmpty();
+
+      if(!missingResources.isEmpty()) {
+        incompleteExercises.append(dto.name).append('\n');
+        Log.w(ExerciseListFragment.class.getName(), missingResources);
+      }
+
+      values.add(converter.fromDTO(dto));
+    }
+
+    if(completeExerciseResources)
+      return null;
+    else return incompleteExercises.toString();
   }
 
   private void openDatabase() {

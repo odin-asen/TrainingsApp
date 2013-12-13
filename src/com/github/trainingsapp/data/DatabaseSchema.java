@@ -44,7 +44,7 @@ public class DatabaseSchema extends SQLiteOpenHelper {
 
   /* The Android's default system path of your application database. */
   private static String DATABASE_PATH = "/data/data/com.github/databases/";
-  private static final String DATABASE_NAME = "test.db";
+  private static final String DATABASE_NAME = "exercises.db";
   private static final int DATABASE_VERSION = 1;
 
   private Context mContext;
