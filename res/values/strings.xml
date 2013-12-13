@@ -35,6 +35,7 @@
 
   <!--Schwierigkeitsstufen-->
   <string name="leicht">Leicht</string>
+  <string name="mittel">Mittel</string>
   <string name="schwierig">Schwierig</string>
 
   <!--Geraete-->
@@ -44,8 +45,8 @@
   <string name="reck">Reck</string>
   <string name="rutsche">Rutsche</string>
   <string name="wand">Wand</string>
-  <string name="bank">Wand</string>
-  <string name="stange">Wand</string>
+  <string name="bank">Bank</string>
+  <string name="reck_gewinkelt">Gewinkeltes Reck</string>
 
   <!--Muskeln-->
   <string name="bizeps">Bizeps</string>

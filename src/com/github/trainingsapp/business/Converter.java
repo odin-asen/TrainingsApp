@@ -24,8 +24,10 @@ public class Converter {
   private static final String PREFIX_ANIMA = "animation_";
   private static final String DEFAULT_VALUE = "unknown";
   public static final int DEFAULT_VALUE_PRIORITY = 2147483647;
-  private Resources mRes;
+  private static final String NO_EQUIPMENT = "nichts";
   private static final int NO_RESOURCE = 0;
+
+  private Resources mRes;
 
   /****************/
   /* Constructors */
@@ -118,8 +120,10 @@ public class Converter {
 
     array = exercise.equipment;
     for (String value : array) {
-      checkResource(message, value, TYPE_STRING, "equipment's name for exercise "+exercise.name);
-      checkResource(message, value, TYPE_DRAWABLE, "equipment's image for exercise "+exercise.name);
+      if(!value.equals(NO_EQUIPMENT)) {
+        checkResource(message, value, TYPE_STRING, "equipment's name for exercise " + exercise.name);
+        checkResource(message, value, TYPE_DRAWABLE, "equipment's image for exercise "+exercise.name);
+      }
     }
 
     return message.toString();
