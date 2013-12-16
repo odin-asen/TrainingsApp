@@ -1,9 +1,17 @@
 <resources>
-    <string name="description_squats">Ausgangsposition: Aufrechter Stand; Beine hüft- bis schulterbreit auseinander, Zehen leicht nach aussen gedreht; leichte Beugung in den Knien
-        Bei der Ausführung darauf achten, dass der Rücken gerade bleibt die ganze Bewegung lang. Erreichen die Oberschenkel eine paralle Position zum Boden, wird die Bewegung umgekehrt in den Stand, jedoch werden die Knie nie durchgestreckt. Man stelle sich vor, man will sich auf einen knietiefen Hocker setzen.
+    <string name="description_squats">
+        <![CDATA[<u>Ausgangsposition:</u><br/>
+        <ul>
+            <li>Aufrechter Stand</li>
+            <li>Beine h&uuml;ft- bis schulterbreit auseinander</li>
+            <li>Zehen leicht nach aussen gedreht</li>
+            <li>leichte Beugung in den Knien</li>
+        </ul>
+        Bei der Ausf&uuml;fchrung darauf achten, dass der R&uuml;cken gerade bleibt die ganze Bewegung lang. Erreichen die Oberschenkel eine paralle Position zum Boden, wird die Bewegung umgekehrt in den Stand, jedoch werden die Knie nie durchgestreckt. Man stelle sich vor, man will sich auf einen knietiefen Hocker setzen.]]>
     </string>
 
-    <string name="description_pushups">Ausgangsposition: Hände auf Höhe des Schultergürtels; Schulterbreit auseinander; Kopf und Füsse bilden eine gerade Linie; Nacken nicht überstrecken (Blick ca. 30cm über der Handposition)
+    <string name="description_pushups">
+        <u>Ausgangsposition:</u> Hände auf Höhe des Schultergürtels; Schulterbreit auseinander; Kopf und Füsse bilden eine gerade Linie; Nacken nicht überstrecken (Blick ca. 30cm über der Handposition)
         Bei der Ausführung wird nicht die Nase zum Boden gebracht, sondern die Brust. Der Nacken wird nicht bewegt. Der gesamt Körper senkt sich in einer Bewegung zum Boden. Hüfte sollte leicht nach oben gehoben werden und niemals durchhängen, da sonst eine unnötige Belastung auf die Bandscheiben im unteren Rücken wirken.
     </string>
 
